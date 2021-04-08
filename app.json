@@ -17,20 +17,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "pages/image/test.png",
-        "selectedIconPath": "pages/image/test.png"
+        "iconPath": "/img/home.png",
+        "selectedIconPath": "/img/home.png"
       },
       {
         "pagePath": "pages/post/post",
         "text": "发布",
-        "iconPath": "pages/image/test.png",
-        "selectedIconPath": "pages/image/test.png"
+        "iconPath": "/img/post.png",
+        "selectedIconPath": "/img/post.png"
       },
       {
         "pagePath": "pages/me/me",
         "text": "我的",
-        "iconPath": "pages/image/test.png",
-        "selectedIconPath": "pages/image/test.png"
+        "iconPath": "/img/me.png",
+        "selectedIconPath": "/img/me.png"
       }
     ]
   },
