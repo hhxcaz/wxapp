@@ -34,6 +34,36 @@ App({
               // });
               // this.userData.userLoginFlag = true;
               // this.userData.userName = "XXX";
+              wx.request({
+                url: "http://106.52.255.36/api/v1/pub/wx/login",
+                method: "POST",
+                data: {
+                  "code": res.code
+                },
+                success: (res) => {
+                  console.log(res);
+                },
+                fail: (res) => {
+                  this.cleanUserData();
+                },
+                complete: () => {
+                  if(!this.userData.userLoginFlag || this.userData.userName == null) {
+                    let Pages = getCurrentPages();
+                    //如果当前页是 发布 或 我的 这二个页面则跳转前要先切回首页[不能让用户返回时留在这二个页面里]
+                    if(Pages.length > 0 && (Pages[Pages.length-1].route == "pages/post/post" || Pages[Pages.length-1].route == "pages/me/me")) {
+                      wx.switchTab({
+                        url: "/pages/index/index"
+                      });
+                    }
+                    wx.showModal({
+                      title: "登入失败",
+                      content: "请尝试重新进入",
+                      showCancel: false,
+                      confirmText: "我知道了"
+                    });
+                  }
+                }
+              });
             },
             fail: (res) => {
               this.cleanUserData();
@@ -47,24 +77,11 @@ App({
                     url: "/pages/index/index"
                   });
                 }
-                //该判断是防止登入失败页面反复跳转
-                if(Pages.length > 0 && (Pages[Pages.length-1].route == "pages/loginError/loginError")){
-                  wx.showToast({
-                    title: "登入失败，请重新尝试",
-                    icon: "none",
-                    duration: 1000
-                  });
-                  return;
-                }
-                wx.navigateTo({
-                  url: "/pages/loginError/loginError",
-                  complete: () => {
-                    wx.showToast({
-                      title: "登入失败，请重新尝试",
-                      icon: "none",
-                      duration: 2000
-                    });
-                  }
+                wx.showModal({
+                  title: "登入失败",
+                  content: "请尝试重新进入",
+                  showCancel: false,
+                  confirmText: "我知道了"
                 });
               }
             }
