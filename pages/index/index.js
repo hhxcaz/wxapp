@@ -4,12 +4,24 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    currentTab: 0,
+  },
+  swichNav: function (e) {
+    console.log(e);
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current,
+      })
+    }
+  },
+  swiperChange: function (e) {
+    console.log(e);
+    this.setData({
+      currentTab: e.detail.current,
+    })
   },
   // 事件处理函数
   bindViewTap() {
@@ -23,6 +35,18 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+  },
+  onReady: function () {
+    // var query = wx.createSelectorQuery();
+    // var that = this;
+    // var len = (wx.getStorageSync('read')).length;
+    // query.select('.exam').boundingClientRect(function (rect) {
+    //   that.setData({
+    //     // 获取要循环标签的高度
+    //     // height: rect.height,
+    //     widHeight: 128 * len
+    //   })
+    // }).exec();
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

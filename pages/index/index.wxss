@@ -1,19 +1,128 @@
-/**index.wxss**/
-.userinfo {
+/* pages/read/read.wxss */
+page{
+  background: #dfdfdf;
+}
+.swiper-tab {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
+  background: #ffffff;
+  justify-content: center;
+  line-height: 66rpx;
+  position: relative;
+  z-index: 9;
+}
+  
+.tab-item {
+  width: 20%;
+  text-align: center;
+  font-size: 15px;
+  color: #dfdfdf;
+  margin: 0 10%;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.swiper {
+  height: 660rpx;
+  background: #dfdfdf;
 }
-
-.usermotto {
-  margin-top: 200px;
+  
+.on {
+  color: #3da8ff;
+}
+.title{
+  margin: 18rpx;
+  font-size: 15px;
+  color: #666;
+}
+.exam{
+  width: 100%;
+  background: white;
+  padding: 18rpx;
+  border-top: 1px solid #dfdfdf;
+}
+.e-title{
+  font-weight: 600;
+  line-height: 18px;
+  width: 58%;
+}
+.month{
+  font-size: 12px;
+  color: #2baaa3;
+  background: rgb(201, 255, 250);
+  border: 1px solid #2baaa3;
+  border-radius: 6px;
+  margin: 3rpx;
+  padding: 0 2rpx;
+}
+.sch{
+  font-size: 12px;
+  color: #ffc919;
+  white-space: nowrap;
+  background: rgb(255, 250, 203);
+  border: 1px solid #ffc919;
+  border-radius: 6px;
+  margin: 3rpx;
+  padding: 0 2rpx;
+}
+.com{
+  font-size: 12px;
+  color: #00a2ff;
+  background: rgb(189, 229, 255);
+  border: 1px solid #2baaa3;
+  border-radius: 6px;
+  margin: 3rpx;
+  padding: 0 2rpx;
+}
+.union{
+  font-size: 12px;
+  color: #2baaa3;
+  background: rgb(255, 250, 201);
+  border: 1px solid #2baaa3;
+  border-radius: 6px;
+  margin: 3rpx;
+  padding: 0 2rpx;
+}
+.time{
+  position: absolute;
+  right: 18rpx;
+  color: #666;
+  font-size: 11px;
+}
+.dot{
+  width: 20rpx;
+  height: 20rpx;
+  margin: 0 12rpx 0 -1.6%;
+  display: inline-block;
+  border-radius: 20rpx;
+  background: white;
+  border: 1px solid #2baaa3;
+}
+.ebox{
+  line-height: 28px;
+  border-left: 1px solid #999;
+  margin: 12rpx;
+}
+.select{
+  color: #2baaa3;
+  border: 1px solid #2baaa3;
+  float: right;
+  right: 26rpx;
+}
+.hide{
+  display: none;
+}
+.subject{
+  line-height: 30px;
+}
+.disbtn{
+  color: white;
+  background: #dfdfdf;
+  border: 1px solid #dfdfdf;
+  float: right;
+  right: 18rpx;
+}
+.inbtn{
+  color: white;
+  background: #2baaa3;
+  border: 1px solid #2baaa3;
+  float: right;
+  right: 18rpx;
 }
