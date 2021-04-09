@@ -20,7 +20,7 @@ App({
         this.cleanUserData();
       },
       complete: () => {
-        if(!this.userData.userLoginFlag || this.userData.userName == null) {
+        if(!this.userData.userLoginFlag || this.userData.nickName == null) {
           sessionFlag = true;
           this.cleanUserData();
         }
@@ -30,8 +30,6 @@ App({
           wx.login({
             success: (res) => {
               // 发送 res.code 到后台换取 openId, sessionKey, unionId
-              // this.userData.userLoginFlag = true;
-              // this.userData.userName = "XXX";
               code = res.code;
             },
             fail: (res) => {
@@ -41,8 +39,11 @@ App({
               if(code != null) {
                 let result = null;//后端返回结果
                 wx.request({
-                  url: "http://106.52.255.36/api/v1/pub/wx/login?code="+code,
+                  url: "http://106.52.255.36/api/v1/pub/wx/login",
                   method: "POST",
+                  data: {
+                    "code": code
+                  },
                   success: (res) => {
                     result = res.data;
                   },
@@ -51,8 +52,15 @@ App({
                   },
                   complete: () => {
                     if(result != null) {
-                      console.log(result);
-                      this.showWelcomeToast("欢迎回来[ xxx ]");
+                      if(result.success) {
+                        this.userData.userLoginFlag = true;
+                        this.userData.admin = result.data.user.admin;
+                        this.userData.token = result.data.token;
+                        this.userData.nickName = result.data.user.nickname;
+                        this.userData.avatarUrl = result.data.user.avatar;
+                        this.showWelcomeToast("欢迎回来[ "+this.userData.nickName+" ]");
+                        return;
+                      }
                       //用户不存在则弹窗询问用户是否注册
                       if(result.code == 2007) {
                         //wx.getUserProfile必须由用户点击手势触发，所以必须要由用户点击是否需要注册
@@ -94,20 +102,19 @@ App({
    * 当用户注册成功时将会当作已登入 [数据信息这时用的是通过微信获取到的，后续数据信息将由后端的为准]
    */
   register() {
-    let userInfo = null;//用户信息
+    let userInfoResult = null;//用户信息回传
     wx.getUserProfile({
       lang: "zh_CN",
       desc: "我们需要您的个人信息注册账号",
       success: (res) => {
-        userInfo = res;
+        userInfoResult = res;
       },
       fail: (res) => {
-        userInfo = null;
+        userInfoResult = null;
         this.cleanUserData();
       },
       complete: () => {
-        if(userInfo != null) {
-          console.log(userInfo);
+        if(userInfoResult != null) {
           let code = null;
           wx.login({
             success: (res) => {
@@ -120,10 +127,11 @@ App({
               if(code != null) {
                 let result = null;//后端返回结果
                 wx.request({
-                  url: "http://106.52.255.36/api/v1/pub/wx/register?code="+code,
+                  url: "http://106.52.255.36/api/v1/pub/wx/register",
                   method: "POST",
                   data: {
-                    "userInfo": userInfo.userInfo
+                    "code": code,
+                    "userInfo": userInfoResult.userInfo
                   },
                   success: (res) => {
                     result = res.data;
@@ -133,9 +141,15 @@ App({
                   },
                   complete: () => {
                     if(result != null) {
-                      console.log(result);
-                      this.showWelcomeToast("欢迎您[ xxx ]");
-                      return;
+                      if(result.success) {
+                        this.userData.userLoginFlag = true;
+                        this.userData.admin = false;
+                        this.userData.nickName = userInfoResult.userInfo.nickName;
+                        this.userData.token = result.data.token;
+                        this.userData.avatarUrl = userInfoResult.userInfo.avatarUrl;
+                        this.showWelcomeToast("欢迎您[ "+this.userData.nickName+" ]");
+                        return;
+                      }
                     }
                     this.showRegisterErrorModal("请尝试重新注册");
                   }
@@ -195,7 +209,7 @@ App({
    * (用户点击 发布 或者 我的 时触发登入/注册 为了让用户 登入/注册 失败时不停留在这二个页面所以切回主页)
    */
   switchIndex() {
-    if(!this.userData.userLoginFlag || this.userData.userName == null) {
+    if(!this.userData.userLoginFlag || this.userData.nickName == null) {
       let Pages = getCurrentPages();
       //如果当前页是 发布 或 我的 这二个页面则跳转前要先切回首页[不能让用户返回时留在这二个页面里]
       if(Pages.length > 0 && (Pages[Pages.length-1].route == "pages/post/post" || Pages[Pages.length-1].route == "pages/me/me")) {
@@ -210,11 +224,17 @@ App({
    */
   cleanUserData() {
     this.userData.userLoginFlag = false;
-    this.userData.userName = null;
+    this.userData.admin = false;
+    this.userData.token = null;
+    this.userData.nickName = null;
+    this.userData.avatarUrl = null;
   },
   userData: {
     userLoginFlag: false,
-    userName: null
+    admin: false,
+    token: null,
+    nickName: null,
+    avatarUrl: null
   },
   globalData: {
     userInfo: null
