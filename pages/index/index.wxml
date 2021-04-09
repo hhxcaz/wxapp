@@ -12,11 +12,11 @@
     <text>综合</text>
   </view>
   <view class="type">
-    <image src="../../img/type.png" class="typeimg"></image>
+    <image src="../../img/moblie.png" class="typeimg"></image>
     <text>手机数码</text>
   </view>
   <view class="type">
-    <image src="../../img/type.png" class="typeimg"></image>
+    <image src="../../img/card.png" class="typeimg"></image>
     <text>卡证钱包</text>
   </view>
   <view class="type">
