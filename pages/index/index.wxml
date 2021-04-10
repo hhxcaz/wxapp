@@ -38,7 +38,6 @@
 <swiper style='height:1000px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
-    <view class="title">列表</view>
     <view class="card">
       <view class="cardtop">
         <view class="card-left">
