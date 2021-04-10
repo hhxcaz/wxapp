@@ -45,8 +45,8 @@ page{
   font-size: 12px;
 }
 .typeimg{
-  width: 100rpx;
-  height: 100rpx;
+  width: 88rpx;
+  height: 88rpx;
 }
 .search{
   width: 50%;
