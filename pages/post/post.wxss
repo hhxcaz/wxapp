@@ -1,1 +1,12 @@
-/* pages/index/post.wxss */
+/* pages/post/post.wxss */
+
+page {
+  background: #dfdfdf;
+}
+.card{
+  background: white;
+  width: 92%;
+  padding: 2%;
+  margin: 16rpx 2%;
+  border-radius: 16rpx;
+}

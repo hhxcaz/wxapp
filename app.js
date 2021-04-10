@@ -39,7 +39,7 @@ App({
               if(code != null) {
                 let result = null;//后端返回结果
                 wx.request({
-                  url: "http://106.52.255.36/api/v1/pub/wx/login",
+                  url: "https://106.52.255.36/api/v1/pub/wx/login",
                   method: "POST",
                   data: {
                     "code": code
@@ -127,7 +127,7 @@ App({
               if(code != null) {
                 let result = null;//后端返回结果
                 wx.request({
-                  url: "http://106.52.255.36/api/v1/pub/wx/register",
+                  url: "https://106.52.255.36/api/v1/pub/wx/register",
                   method: "POST",
                   data: {
                     "code": code,

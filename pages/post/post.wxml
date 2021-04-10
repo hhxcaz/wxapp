@@ -1,2 +1,6 @@
-<!--pages/index/post.wxml-->
-<text>pages/index/post.wxml</text>
+<!--pages/post/post.wxml-->
+<view>
+  <view class="card">
+    23333
+  </view>
+</view>
