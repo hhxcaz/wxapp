@@ -5,9 +5,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    num: 160,
+    currentTab: 0,
   },
-
+  swichNav: function (e) {
+    console.log(e);
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current,
+      })
+    }
+  },
+  swiperChange: function (e) {
+    console.log(e);
+    this.setData({
+      currentTab: e.detail.current,
+    })
+  },
+  cal: function (e) {
+    this.setData({
+      num: 160 - e.detail.value.length
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

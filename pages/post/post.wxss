@@ -3,10 +3,73 @@
 page {
   background: #dfdfdf;
 }
-.card{
-  background: white;
-  width: 92%;
+.swiper-tab {
+  display: flex;
+  background: #ffffff;
+  justify-content: center;
+  line-height: 66rpx;
+  position: relative;
+  z-index: 9;
+}
+  
+.tab-item {
+  width: 26%;
+  text-align: center;
+  font-size: 15px;
+  color: #dfdfdf;
+  margin: 0 10%;
+}
+
+.swiper {
+  height: 660rpx;
+  background: #dfdfdf;
+}
+  
+.on {
+  color: #3da8ff;
+  font-weight: 600;
+}
+
+textarea{
+  width: 96%;
+  margin: 2.8% 0;
   padding: 2%;
-  margin: 16rpx 2%;
-  border-radius: 16rpx;
+  background: #ffffff;
+}
+.tip{
+  color: #999;
+  font-size: 13px;
+  bottom: 6px;
+  right: 12px;
+  position: absolute;
+}
+.location{
+  color: #999;
+  font-size: 13px;
+  bottom: 6px;
+  left: 12px;
+  position: absolute;
+}
+.money{
+  width: 96%;
+  display: flex;
+  padding: 2%;
+  background: #ffffff;
+  color: rgb(255, 101, 101);
+}
+.money input{
+  margin: 0 0 0 2%;
+}
+.type{
+  width: 96%;
+  display: flex;
+  border-top: 1px solid rgb(216, 216, 216);
+  padding: 2%;
+  background: #ffffff;
+}
+.post-btn{
+    width: 100%;
+    display: flex;
+    position: absolute;
+    bottom: 2%;
 }

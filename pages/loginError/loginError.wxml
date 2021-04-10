@@ -1,3 +1,0 @@
-<!--pages/loginError.wxml-->
-<text>登入失败，请重试</text>
-<button bindtap="login" hover-stay-time="500">点击重新登入</button>

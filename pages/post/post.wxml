@@ -1,6 +1,58 @@
-<!--pages/post/post.wxml-->
-<view>
-  <view class="card">
-    23333
-  </view>
+<view class="swiper-tab">
+  <view class="tab-item {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">发布寻物启事</view>
+  <view class="tab-item {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">发布失物招领</view>
 </view>
+
+<!--内容主体-->
+<swiper style='height:600px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+  <!-- 寻物启事 -->
+  <swiper-item>
+    <view style="position:relative">
+      <textarea value="{{info}}" bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
+      <view class="location">
+        📍南宁-西乡塘区
+      </view>
+      <view class="tip">
+        还可输入{{num}}字
+      </view>
+    </view>
+    <view class="money">
+      <text>酬谢：¥</text>
+      <input type="text" placeholder-style="text-align:center" placeholder="输入金额（人民币）" maxlength="6"/>
+    </view>
+    <view class="type">
+      <text>分类：</text>
+    </view>
+    <view class="type">
+      <text>添加图片  ></text>
+    </view>
+
+    <view class="post-btn">
+      <button type="warn" plain="true" bindtap="comfirm" style="background: #ffffff;">确认发布</button>
+    </view>
+    
+  </swiper-item>
+
+  <!-- 失物招领 -->
+  <swiper-item>
+    <view style="position:relative">
+      <textarea value="{{info}}" bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
+      <view class="location">
+        📍南宁-西乡塘区
+      </view>
+      <view class="tip">
+        还可输入{{num}}字
+      </view>
+    </view>
+    <view class="type">
+      <text>分类：</text>
+    </view>
+    <view class="type">
+      <text>添加图片  ></text>
+    </view>
+
+    <view class="post-btn">
+      <button type="warn" plain="true" bindtap="comfirm" style="background: #ffffff;">确认发布</button>
+    </view>
+  </swiper-item>
+</swiper>
