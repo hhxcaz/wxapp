@@ -6,6 +6,7 @@ Page({
    */
   data: {
     num: 160,
+    snum: 160,
     currentTab: 0,
   },
   swichNav: function (e) {
@@ -26,6 +27,11 @@ Page({
     })
   },
   cal: function (e) {
+    this.setData({
+      num: 160 - e.detail.value.length
+    })
+  },
+  cals: function (e) {
     this.setData({
       num: 160 - e.detail.value.length
     })

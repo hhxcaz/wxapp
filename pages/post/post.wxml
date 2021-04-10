@@ -36,12 +36,12 @@
   <!-- 失物招领 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea value="{{info}}" bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
+      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
       <view class="location">
         📍南宁-西乡塘区
       </view>
       <view class="tip">
-        还可输入{{num}}字
+        还可输入{{snum}}字
       </view>
     </view>
     <view class="type">
