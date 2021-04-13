@@ -1,6 +1,5 @@
 // pages/post/post.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -8,6 +7,19 @@ Page({
     num: 160,
     snum: 160,
     currentTab: 0,
+    selectorVisible: false,
+    locationName: null
+  },
+  selectorCity: function (e) {
+    this.setData({
+      selectorVisible: true,
+    });
+  },
+  // 当用户选择了组件中的城市之后的回调函数
+  onSelectCity(e) {
+    this.setData({
+      locationName: e.detail.province.fullname+"-"+e.detail.city.fullname
+    });
   },
   swichNav: function (e) {
     console.log(e);
@@ -52,7 +64,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    getApp().login();//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则关闭当前页面跳转到登入失败页面
+    getApp().login();//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
   },
 
   /**
@@ -66,7 +78,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
 
   /**

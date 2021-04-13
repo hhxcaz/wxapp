@@ -49,6 +49,7 @@ textarea{
   bottom: 6px;
   left: 12px;
   position: absolute;
+  z-index: 999;
 }
 .money{
   width: 96%;
