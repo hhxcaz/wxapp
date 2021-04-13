@@ -1,1 +1,23 @@
 /* pages/me/me.wxss */
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  padding: 88rpx 0;
+  align-items: center;
+  color: #aaa;
+}
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+.history{
+  width: 96%;
+  display: flex;
+  justify-content: space-between;
+  /* border-top: 1px solid rgb(216, 216, 216); */
+  padding: 2%;
+  background: #ffffff;
+}
