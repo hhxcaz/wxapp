@@ -1,0 +1,132 @@
+
+page{
+  background: #dfdfdf;
+}
+.swiper-tab {
+  padding-top: 100rpx;
+  display: flex;
+  background: #ffffff;
+  justify-content: center;
+  line-height: 66rpx;
+  position: relative;
+  z-index: 9;
+}
+  
+.tab-item {
+  width: 20%;
+  text-align: center;
+  font-size: 15px;
+  color: #dfdfdf;
+  margin: 0 10%;
+}
+
+.swiper {
+  height: 660rpx;
+  background: #dfdfdf;
+}
+  
+.on {
+  color: #3da8ff;
+}
+.title{
+  margin: 18rpx;
+  font-size: 15px;
+  color: #666;
+}
+.typebox{
+  background: #fff;
+  padding: 10rpx 0;
+  display: flex;
+  justify-content: space-around;
+}
+.type{
+  width: 100rpx;
+  text-align: center;
+  font-size: 12px;
+}
+.typeimg{
+  width: 88rpx;
+  height: 88rpx;
+}
+.search{
+  width: 50%;
+  height: 50rpx;
+  margin: 0 6rpx 0 16rpx;
+  padding: 1% 2%;
+  border: 1px solid #52b1ff;
+  border-radius: 6px;
+}
+.topbox{
+  position: fixed;
+  width: 96%;
+  z-index: 99;
+  padding: 2%;
+  line-height: 60rpx;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+}
+.card{
+  background: white;
+  width: 92%;
+  padding: 2%;
+  margin: 16rpx 2%;
+  border-radius: 16rpx;
+}
+.cardtop{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 16rpx;
+}
+.card-left{
+  width: 60%;
+  display: flex;
+}
+.card-right{
+  float: right;
+}
+.avator{
+  width: 100rpx;
+  height: 100rpx;
+}
+.username{
+  padding:6rpx 16rpx;
+}
+.time{
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  text-align: center;
+  position: absolute;
+  top: 50rpx;
+  left: 120rpx;
+  color: rgb(170, 170, 170);
+}
+.money{
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  text-align: center;
+  position: absolute;
+  top: 50rpx;
+  right: 0;
+  color: rgb(236, 142, 0);
+}
+.call{
+  width: 56px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 16rpx;
+  border: 1px solid rgb(152, 152, 255);
+}
+.info{
+  padding-top: 16rpx;
+}
+.imgs{
+  margin-top: 16rpx;
+  display: flex;
+  justify-content: space-between;
+}

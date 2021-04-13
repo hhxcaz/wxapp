@@ -23,6 +23,11 @@ Page({
       currentTab: e.detail.current,
     })
   },
+  calling: function(){
+    wx.makePhoneCall({
+      phoneNumber: '18677066237',
+    })
+  },
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({

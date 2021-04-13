@@ -50,7 +50,7 @@
           <view class="time">刚刚</view>
         </view>
         <view class="card-right">
-          <view class="call" bindtap="calling">联系TA</view>
+          <view class="call">联系TA</view>
           <view class="money">酬谢：¥66.6</view>
         </view>
       </view>
