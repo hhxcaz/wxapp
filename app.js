@@ -56,6 +56,7 @@ App({
                         this.userData.userLoginFlag = true;
                         this.userData.admin = result.data.user.admin;
                         this.userData.token = result.data.token;
+                        wx.setStorageSync('token', result.data.token);
                         this.userData.nickName = result.data.user.nickname;
                         this.userData.avatarUrl = result.data.user.avatar;
                         this.showWelcomeToast("欢迎回来[ "+this.userData.nickName+" ]");

@@ -7,7 +7,7 @@
   <!-- 寻物启事 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea value="{{info}}" bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
+      <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述"/>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择位置" }}
       </view>
@@ -16,18 +16,28 @@
       </view>
     </view>
     <view class="money">
-      <text>酬谢：¥</text>
+      <text>酬谢： ¥</text>
       <input type="text" placeholder-style="text-align:center" placeholder="输入金额（人民币）" maxlength="6"/>
     </view>
     <view class="type">
       <text>分类：</text>
+      <view class="sort">
+      <view class='select' catchtap='selectTap'>
+        <text class='select_text'>{{selectData[index]}}</text>
+      </view>
+      <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*70):0}}rpx;'>
+        <text class='option' wx:for='{{selectData}}' wx:key='this'
+          data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+      </view>
+    <!-- <image class="ang" src="../../img/ang.png"></image> -->
+  </view>
     </view>
     <view class="type">
-      <text>添加图片  ></text>
+      <text>添加图片+</text>
     </view>
 
     <view class="post-btn">
-      <button type="warn" plain="true" bindtap="comfirm" style="background: #ffffff;">确认发布</button>
+      <button type="warn" plain="true" bindtap="xpost" style="background: #ffffff;">确认发布</button>
     </view>
     
   </swiper-item>
@@ -35,7 +45,7 @@
   <!-- 失物招领 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入您的物品描述"/>
+      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述"/>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择位置" }}
       </view>
@@ -47,9 +57,8 @@
       <text>分类：</text>
     </view>
     <view class="type">
-      <text>添加图片  ></text>
+      <text>添加图片+</text>
     </view>
-
     <view class="post-btn">
       <button type="warn" plain="true" bindtap="comfirm" style="background: #ffffff;">确认发布</button>
     </view>

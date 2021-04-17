@@ -8,6 +8,8 @@ Page({
     snum: 160,
     currentTab: 0,
     selectorVisible: false,
+    selectData: ['手机数码', '卡证钱包', '宠物', '其他'],
+    index: 0, //选择的下拉列表下标
     locationName: null
   },
   selectorCity: function (e) {
@@ -15,10 +17,23 @@ Page({
       selectorVisible: true,
     });
   },
+  selectTap() {
+    this.setData({
+      show: !this.data.show
+    });
+  },
+  // 点击下拉列表
+  optionTap(e) {
+    let Index = e.currentTarget.dataset.index; //获取点击的下拉列表的下标
+    this.setData({
+      index: Index,
+      show: !this.data.show
+    });
+  },
   // 当用户选择了组件中的城市之后的回调函数
   onSelectCity(e) {
     this.setData({
-      locationName: e.detail.province.fullname+"-"+e.detail.city.fullname
+      locationName: e.detail.province.fullname + "-" + e.detail.city.fullname
     });
   },
   swichNav: function (e) {
@@ -40,7 +55,8 @@ Page({
   },
   cal: function (e) {
     this.setData({
-      num: 160 - e.detail.value.length
+      num: 160 - e.detail.value.length,
+      xinfo: e.detail.value
     })
   },
   cals: function (e) {
@@ -48,23 +64,49 @@ Page({
       num: 160 - e.detail.value.length
     })
   },
+  xpost: function () {
+    console.log(this.data.locationName)
+    wx.showLoading({
+      title: '正在发布......',
+    })
+    wx.request({
+      url: 'https://106.52.255.36/api/v1/pri/lost/publish',
+      method:'POST',
+      header: { 
+        'Authorization': wx.getStorageSync('token')
+      },
+      data: {
+        desc: this.data.xinfo,
+        address: this.data.locationName,
+        categoryId: 6,
+        reward: 66,
+        type: 2
+      },
+      success: (res) => {
+        console.log(res.data)
+      },
+      complete: function (res) {
+        wx.hideLoading()
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    getApp().login();//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
+    getApp().login(); //每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
   },
 
   /**
@@ -77,8 +119,7 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作

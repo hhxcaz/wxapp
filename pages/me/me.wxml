@@ -16,9 +16,9 @@
     </block>
   </view>
 
-  <view class="history">
-      <text>发布记录</text>
-      <text>></text>
+  <view class="history" bindtap="record">
+      <text>我的发布</text>
+      <text style="width:20px">></text>
   </view>
 
   <view class="history">
