@@ -76,8 +76,9 @@ Page({
         'Authorization': wx.getStorageSync('token')
       },
       data: {
-        desc: this.data.xinfo,
+        intro: this.data.xinfo,
         address: this.data.locationName,
+        image: '',
         categoryId: 6,
         reward: 66,
         type: 2
