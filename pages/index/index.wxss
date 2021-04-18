@@ -89,6 +89,8 @@ page{
 .avator{
   width: 100rpx;
   height: 100rpx;
+  border-radius: 100rpx;
+  overflow: hidden;
 }
 .username{
   padding:6rpx 16rpx;

@@ -37,6 +37,30 @@
 <swiper style='height:1000px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
+  <block wx:for="{{xlist}}" wx:key="index">
+      <view class="card">
+      <view class="cardtop">
+        <view class="card-left">
+          <view class="avator">
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
+          </view>
+          <view class="username">
+            {{item.user.nickname}}
+          </view>
+          <view class="time">6小时前</view>
+        </view>
+        <view class="card-right">
+          <view class="call">联系TA</view>
+          <view class="money">酬谢：¥{{item.reward}}</view>
+        </view>
+      </view>
+      <viwe class="info">
+        {{item.intro}}
+      </viwe>
+      </view>
+  </block>
+
+
     <view class="card">
       <view class="cardtop">
         <view class="card-left">
@@ -64,49 +88,6 @@
         <image src="../../img/1.png" style="width:110px;height:110px"></image>
       </view>
     </view>
-
-    <view class="card">
-      <view class="cardtop">
-        <view class="card-left">
-          <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
-          </view>
-          <view class="username">
-            GXCME-AI
-          </view>
-          <view class="time">6小时前</view>
-        </view>
-        <view class="card-right">
-          <view class="call">联系TA</view>
-          <view class="money">酬谢：¥66.6</view>
-        </view>
-      </view>
-      <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
-      </viwe>
-      </view>
-
-      <view class="card">
-      <view class="cardtop">
-        <view class="card-left">
-          <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
-          </view>
-          <view class="username">
-            GXCME-AI
-          </view>
-          <view class="time">2021 03-31 18:10</view>
-        </view>
-        <view class="card-right">
-          <view class="call">联系TA</view>
-          <view class="money">酬谢：¥66.6</view>
-        </view>
-      </view>
-      <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
-      </viwe>
-      </view>
-
       
   </swiper-item>
 

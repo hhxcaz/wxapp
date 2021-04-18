@@ -34,12 +34,31 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad() {
+  onLoad: function(optins) {
+    var _this = this
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
       })
     }
+    wx.request({
+      url: 'https://106.52.255.36/api/v1/pub/lost/list',
+      header: { 
+        'Authorization': wx.getStorageSync('token')
+      },
+      data: {
+        address: '广西壮族自治区-南宁市',
+        type: '2',
+        limit: 10,
+        page: 1
+      },
+      success: (res) => {
+        _this.setData({
+          xlist: res.data.data.items
+        })
+        console.log(res.data)
+      }
+    })
   },
   onReady: function () {
     // var query = wx.createSelectorQuery();
