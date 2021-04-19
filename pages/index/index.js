@@ -34,6 +34,53 @@ Page({
       url: '../logs/logs'
     })
   },
+    /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '加载中......',
+    })
+    wx.request({
+      url: 'https://106.52.255.36/api/v1/pub/lost/list',
+      header: { 
+        'Authorization': wx.getStorageSync('token')
+      },
+      data: {
+        address: '广西壮族自治区-南宁市',
+        type: '2',
+        limit: 10,
+        page: 1
+      },
+      success: (res) => {
+        _this.setData({
+          xlist: res.data.data.items
+        })
+        console.log(res.data)
+      },
+      complete: function (res) {
+        wx.hideLoading()
+        wx.stopPullDownRefresh()
+      }
+    })
+    var query = wx.createSelectorQuery();
+    // var len = (wx.getStorageSync('read')).length;
+    // query.select('.exam').boundingClientRect(function (rect) {
+    //   _this.setData({
+    //     // 获取要循环标签的高度
+    //     // height: rect.height,
+    //     widHeight: 128 * len
+    //   })
+    // }).exec();
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
   onLoad: function(optins) {
     var _this = this
     if (wx.getUserProfile) {
