@@ -53,6 +53,11 @@ Page({
       currentTab: e.detail.current,
     })
   },
+  money: function (e) {
+    this.setData({
+      money: e.detail.value
+    })
+  },
   cal: function (e) {
     this.setData({
       num: 160 - e.detail.value.length,
@@ -79,7 +84,7 @@ Page({
         intro: this.data.xinfo,
         address: this.data.locationName,
         image: '',
-        categoryId: 6,
+        categoryId: this.data.index,
         reward: 66,
         type: 2
       },

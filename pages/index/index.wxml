@@ -51,7 +51,7 @@
         </view>
         <view class="card-right">
           <view class="call">联系TA</view>
-          <view class="money">酬谢：¥{{item.reward}}</view>
+          <view class="money" wx:if="{{item.reward !== 0}}">酬谢：¥{{item.reward}}</view>
         </view>
       </view>
       <viwe class="info">

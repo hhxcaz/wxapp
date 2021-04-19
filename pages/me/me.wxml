@@ -17,6 +17,11 @@
   </view>
 
   <view class="history" bindtap="record">
+      <text>联系电话</text>
+      <text style="color:#999">18896689166</text>
+      <text style="width:60px">_🖊️</text>
+  </view>
+  <view class="history" bindtap="record">
       <text>我的发布</text>
       <text style="width:20px">></text>
   </view>
