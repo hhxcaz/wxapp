@@ -1,8 +1,4 @@
-// pages/post/post.js
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     num: 160,
     snum: 160,
@@ -11,11 +7,6 @@ Page({
     selectData: ['手机数码', '卡证钱包', '宠物', '其他'],
     index: 0, //选择的下拉列表下标
     locationName: null
-  },
-  selectorCity: function (e) {
-    this.setData({
-      selectorVisible: true,
-    });
   },
   selectTap() {
     this.setData({
@@ -30,11 +21,17 @@ Page({
       show: !this.data.show
     });
   },
+  selectorCity: function (e) {
+    this.setData({
+      selectorVisible: true,
+    });
+  },
   // 当用户选择了组件中的城市之后的回调函数
   onSelectCity(e) {
     this.setData({
-      locationName: e.detail.province.fullname + "-" + e.detail.city.fullname
+      locationName: e.detail.city.fullname
     });
+    wx.setStorageSync('location', e.detail.city.fullname)
   },
   swichNav: function (e) {
     console.log(e);
@@ -70,7 +67,7 @@ Page({
     })
   },
   xpost: function () {
-    console.log(this.data.locationName)
+    console.log(this.data.money)
     wx.showLoading({
       title: '正在发布......',
     })
@@ -85,8 +82,34 @@ Page({
         address: this.data.locationName,
         image: '',
         categoryId: this.data.index,
-        reward: 66,
+        reward: this.data.money,
         type: 2
+      },
+      success: (res) => {
+        console.log(res.data)
+      },
+      complete: function (res) {
+        wx.hideLoading()
+      }
+    })
+  },
+  spost: function () {
+    console.log(this.data.money)
+    wx.showLoading({
+      title: '正在发布......',
+    })
+    wx.request({
+      url: 'https://106.52.255.36/api/v1/pri/lost/publish',
+      method:'POST',
+      header: { 
+        'Authorization': wx.getStorageSync('token')
+      },
+      data: {
+        intro: this.data.xinfo,
+        address: this.data.locationName,
+        image: '',
+        categoryId: this.data.index,
+        type: 1
       },
       success: (res) => {
         console.log(res.data)

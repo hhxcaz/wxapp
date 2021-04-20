@@ -5,6 +5,8 @@ const app = getApp()
 Page({
   data: {
     currentTab: 0,
+    selectorVisible: false,
+    locationName: '南宁市'
   },
   swichNav: function (e) {
     console.log(e);
@@ -23,7 +25,19 @@ Page({
       currentTab: e.detail.current,
     })
   },
-  calling: function(){
+  selectorCity: function (e) {
+    this.setData({
+      selectorVisible: true,
+    });
+  },
+  // 当用户选择了组件中的城市之后的回调函数
+  onSelectCity(e) {
+    this.setData({
+      locationName: e.detail.city.fullname
+    });
+    wx.setStorageSync('location', e.detail.city.fullname)
+  },
+  calling: function () {
     wx.makePhoneCall({
       phoneNumber: '18677066237',
     })
@@ -34,9 +48,9 @@ Page({
       url: '../logs/logs'
     })
   },
-    /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
+  /**
+ * 页面相关事件处理函数--监听用户下拉动作
+ */
   onPullDownRefresh: function () {
     var _this = this;
     wx.showLoading({
@@ -44,11 +58,11 @@ Page({
     })
     wx.request({
       url: 'https://106.52.255.36/api/v1/pub/lost/list',
-      header: { 
+      header: {
         'Authorization': wx.getStorageSync('token')
       },
       data: {
-        address: '广西壮族自治区-南宁市',
+        address: this.data.locationName,
         type: '2',
         limit: 10,
         page: 1
@@ -57,7 +71,6 @@ Page({
         _this.setData({
           xlist: res.data.data.items
         })
-        console.log(res.data)
       },
       complete: function (res) {
         wx.hideLoading()
@@ -81,7 +94,7 @@ Page({
   onReachBottom: function () {
 
   },
-  onLoad: function(optins) {
+  onLoad: function (optins) {
     var _this = this
     if (wx.getUserProfile) {
       this.setData({
@@ -90,11 +103,11 @@ Page({
     }
     wx.request({
       url: 'https://106.52.255.36/api/v1/pub/lost/list',
-      header: { 
+      header: {
         'Authorization': wx.getStorageSync('token')
       },
       data: {
-        address: '广西壮族自治区-南宁市',
+        address: this.data.locationName,
         type: '2',
         limit: 10,
         page: 1

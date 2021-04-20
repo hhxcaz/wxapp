@@ -48,11 +48,14 @@ page{
   width: 88rpx;
   height: 88rpx;
 }
+.loc{
+  font-size: 16px;
+}
 .search{
   width: 50%;
   height: 50rpx;
   margin: 0 6rpx 0 16rpx;
-  padding: 1% 2%;
+  padding: 0.6% 1%;
   border: 1px solid #52b1ff;
   border-radius: 6px;
 }

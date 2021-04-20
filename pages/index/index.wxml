@@ -1,5 +1,5 @@
 <view class="topbox">
-  <view>📍南宁-西乡塘区</view>
+  <view class="loc" bindtap="selectorCity">📍{{ locationName }}</view>
   <view class="search">
     <input type="text" confirm-type="search" class="serach-input" placeholder-style="text-align:center"
       placeholder="搜索物品🔍" bindconfirm="searching" />
@@ -97,3 +97,12 @@
 
   </swiper-item>
 </swiper>
+
+<!-- 城市选择器 -->
+<selector-component
+  show="{{ selectorVisible }}"
+  key="VPFBZ-FRDKX-DNG46-TW6C7-D347E-CIB6G"
+  referer="找寻"
+  hotCitys = '北京,上海,南宁,桂林,广州,深圳,成都,杭州'
+  bindselect="onSelectCity"
+></selector-component>

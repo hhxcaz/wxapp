@@ -16,17 +16,17 @@
     </block>
   </view>
 
-  <view class="history" bindtap="record">
+  <view class="history">
       <text>联系电话</text>
       <text style="color:#999">18896689166</text>
-      <text style="width:60px">_🖊️</text>
+      <text>_🖊️</text>
   </view>
   <view class="history" bindtap="record">
       <text>我的发布</text>
-      <text style="width:20px">></text>
+      <text class="right">> </text>
   </view>
 
   <view class="history">
       <text>AI帮你找</text>
-      <switch checked="{{switch1Checked}}" bindchange="lost" style="transform:scale(.68)" />
+      <switch checked="{{switch1Checked}}" bindchange="lost" style="transform:scale(.68);margin-right: -10rpx;"/>
   </view>

@@ -7,9 +7,9 @@
   <!-- 寻物启事 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述"/>
+      <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地丢失"/>
       <view class="location" bindtap="selectorCity">
-        📍{{ locationName != null ? locationName : "未选择位置" }}
+        📍{{ locationName != null ? locationName : "未选择区域" }}
       </view>
       <view class="tip">
         还可输入{{num}}字
@@ -29,7 +29,6 @@
         <text class='option' wx:for='{{selectData}}' wx:key='this'
           data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
       </view>
-    <!-- <image class="ang" src="../../img/ang.png"></image> -->
   </view>
     </view>
     <view class="type">
@@ -45,7 +44,7 @@
   <!-- 失物招领 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述"/>
+      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地拾取"/>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择位置" }}
       </view>
@@ -55,12 +54,21 @@
     </view>
     <view class="type">
       <text>分类：</text>
+      <view class="sort">
+      <view class='select' catchtap='selectTap'>
+        <text class='select_text'>{{selectData[index]}}</text>
+      </view>
+      <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*70):0}}rpx;'>
+        <text class='option' wx:for='{{selectData}}' wx:key='this'
+          data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+      </view>
+  </view>
     </view>
     <view class="type">
       <text>添加图片+</text>
     </view>
     <view class="post-btn">
-      <button type="warn" plain="true" bindtap="comfirm" style="background: #ffffff;">确认发布</button>
+      <button type="warn" plain="true" bindtap="spost" style="background: #ffffff;">确认发布</button>
     </view>
   </swiper-item>
 </swiper>
@@ -70,5 +78,6 @@
   show="{{ selectorVisible }}"
   key="VPFBZ-FRDKX-DNG46-TW6C7-D347E-CIB6G"
   referer="找寻"
+  hotCitys = '北京,上海,南宁,桂林,广州,深圳,成都,杭州'
   bindselect="onSelectCity"
 ></selector-component>
