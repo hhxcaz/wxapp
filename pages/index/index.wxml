@@ -47,7 +47,7 @@
           <view class="username">
             {{item.user.nickname}}
           </view>
-          <view class="time">6小时前</view>
+          <view class="time">{{item.createTime}}</view>
         </view>
         <view class="card-right">
           <view class="call">联系TA</view>
