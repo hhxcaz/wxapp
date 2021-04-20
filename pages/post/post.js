@@ -6,7 +6,7 @@ Page({
     selectorVisible: false,
     selectData: ['手机数码', '卡证钱包', '宠物', '其他'],
     index: 0, //选择的下拉列表下标
-    locationName: null
+    locationName: '南宁市'
   },
   selectTap() {
     this.setData({
@@ -136,6 +136,11 @@ Page({
    */
   onShow: function () {
     getApp().login(); //每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
+    if(wx.getStorageSync('location')!==''){
+      this.setData({
+        locationName: wx.getStorageSync('location')
+      });
+    }
   },
 
   /**
