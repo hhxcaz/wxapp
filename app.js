@@ -55,7 +55,6 @@ App({
                       if(result.success) {
                         this.userData.userLoginFlag = true;
                         this.userData.admin = result.data.user.admin;
-                        this.userData.token = result.data.token;
                         wx.setStorageSync('token', result.data.token);
                         this.userData.nickName = result.data.user.nickname;
                         this.userData.avatarUrl = result.data.user.avatar;
@@ -146,7 +145,7 @@ App({
                         this.userData.userLoginFlag = true;
                         this.userData.admin = false;
                         this.userData.nickName = userInfoResult.userInfo.nickName;
-                        this.userData.token = result.data.token;
+                        wx.setStorageSync('token', result.data.token);
                         this.userData.avatarUrl = userInfoResult.userInfo.avatarUrl;
                         this.showWelcomeToast("欢迎您[ "+this.userData.nickName+" ]");
                         return;
@@ -226,14 +225,12 @@ App({
   cleanUserData() {
     this.userData.userLoginFlag = false;
     this.userData.admin = false;
-    this.userData.token = null;
     this.userData.nickName = null;
     this.userData.avatarUrl = null;
   },
   userData: {
     userLoginFlag: false,
     admin: false,
-    token: null,
     nickName: null,
     avatarUrl: null
   },
