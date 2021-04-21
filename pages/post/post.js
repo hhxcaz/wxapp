@@ -77,8 +77,6 @@ Page({
     });
   },
   xpost: function () {
-    console.log(this.data.money)
-    console.log(this.data.photoList);
     wx.showLoading({
       title: '正在发布......',
     })
@@ -91,7 +89,7 @@ Page({
       data: {
         intro: this.data.xinfo,
         address: this.data.locationName,
-        image: '',
+        image: this.data.photoList.toString(),
         categoryId: this.data.index,
         reward: this.data.money,
         type: 2
