@@ -116,7 +116,7 @@ Page({
       data: {
         intro: this.data.xinfo,
         address: this.data.locationName,
-        image: '',
+        image: this.data.photoList.toString(),
         categoryId: this.data.index,
         type: 1
       },
