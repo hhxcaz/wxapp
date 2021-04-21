@@ -1,0 +1,13 @@
+<view class="photo-cell">
+  <view class="photo-cell-item" wx:for="{{ photoList }}" wx:key="index" wx:if="{{ index < 3 }}">
+    <!-- 显示的图片 -->
+    <image class="photo-cell-item-image" bindtap="showImg" data-index="{{ index }}" src="{{ item }}">
+      <!-- 取消按钮 -->
+      <image class="photo-cell-item-cancel" catchtap="deleteImg" data-index="{{ index }}" src="../../img/cancel.png"></image>
+    </image>
+  </view>
+  <!-- 上传按钮 -->
+  <view class="photo-cell-item" bindtap="uploadImg" wx:if="{{ photoList.length < 3 }}">
+    <image class="photo-cell-item-image" src="../../img/uploadPhtot.png"></image>
+  </view>
+</view>

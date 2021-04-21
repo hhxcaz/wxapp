@@ -1,5 +1,6 @@
 Page({
   data: {
+    photoList: [],
     num: 160,
     snum: 160,
     currentTab: 0,
@@ -66,8 +67,18 @@ Page({
       num: 160 - e.detail.value.length
     })
   },
+  /**
+   * 自定义子组件更新 PhotoList 参数
+   * @param {*} e 
+   */
+  updatePhotoList: function(e) {
+    this.setData({
+      photoList: e.detail.photoList
+    });
+  },
   xpost: function () {
     console.log(this.data.money)
+    console.log(this.data.photoList);
     wx.showLoading({
       title: '正在发布......',
     })

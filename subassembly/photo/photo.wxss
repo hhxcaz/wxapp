@@ -1,0 +1,25 @@
+.photo-cell {
+  width: 750rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.photo-cell-item {
+  width: 200rpx;
+  height: 200rpx;
+  margin-top: 25rpx;
+  margin-left: 25rpx;
+}
+.photo-cell-item-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.photo-cell-item-cancel {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}

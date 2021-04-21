@@ -8,6 +8,9 @@
   <swiper-item>
     <view style="position:relative">
       <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地丢失"/>
+      <view class="photo">
+        <photo photoList="{{ photoList }}" bind:updatePhotoList="updatePhotoList"></photo>
+      </view>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择区域" }}
       </view>
@@ -45,6 +48,9 @@
   <swiper-item>
     <view style="position:relative">
       <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地拾取"/>
+      <view class="photo">
+        <photo photoList="{{ photoList }}" bind:updatePhotoList="updatePhotoList"></photo>
+      </view>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择位置" }}
       </view>

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "selector-component": "plugin://citySelector/selector-component"
+    "selector-component": "plugin://citySelector/selector-component",
+    "photo": "../../subassembly/photo/photo"
   },
   "backgroundColor":"#3da8ff",
   "navigationBarBackgroundColor": "#3da8ff",

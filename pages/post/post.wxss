@@ -1,5 +1,4 @@
 /* pages/post/post.wxss */
-
 page {
   background: #dfdfdf;
 }
@@ -42,6 +41,11 @@ textarea{
   bottom: 6px;
   right: 12px;
   position: absolute;
+}
+.photo{
+  bottom: 50px;
+  position: absolute;
+  z-index: 999;
 }
 .location{
   color: #999;
