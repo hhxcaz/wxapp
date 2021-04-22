@@ -32,8 +32,8 @@
       </view>
     </view>
     <view class="type">添加图片</view>
-    <view class="type" style="border:0" photoList="{{ photoList }}"  bind:updatePhotoList="updatePhotoList">
-      <photo></photo>
+    <view class="type" style="border:0">
+      <photo photoList="{{ photoList }}"  bind:updatePhotoList="updatePhotoList"></photo>
     </view>
 
     <view class="post-btn">
