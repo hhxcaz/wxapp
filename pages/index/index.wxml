@@ -93,8 +93,27 @@
 
   <!-- 失物招领 -->
   <swiper-item>
-    <view class="title">列表</view>
-
+    <block wx:for="{{slist}}" wx:key="index">
+      <view class="card">
+      <view class="cardtop">
+        <view class="card-left">
+          <view class="avator">
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
+          </view>
+          <view class="username">
+            {{item.user.nickname}}
+          </view>
+          <view class="time">{{item.createTime}}</view>
+        </view>
+        <view class="card-right">
+          <view class="call">联系TA</view>
+        </view>
+      </view>
+      <viwe class="info">
+        {{item.intro}}
+      </viwe>
+      </view>
+  </block>
   </swiper-item>
 </swiper>
 

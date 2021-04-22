@@ -9,7 +9,7 @@ Page({
     locationName: '南宁市'
   },
   swichNav: function (e) {
-    console.log(e);
+
     var that = this;
     if (this.data.currentTab === e.target.dataset.current) {
       return false;
@@ -20,7 +20,6 @@ Page({
     }
   },
   swiperChange: function (e) {
-    console.log(e);
     this.setData({
       currentTab: e.detail.current,
     })
@@ -48,6 +47,34 @@ Page({
       url: '../logs/logs'
     })
   },
+  getdata(i) {
+    wx.request({
+      url: 'https://api.xunhuiwang.cn/api/v1/pub/lost/list',
+      header: { 'Authorization': wx.getStorageSync('token') },
+      data: {
+        address: this.data.locationName,
+        type: i,
+        limit: 10,
+        page: 1
+      },
+      success: (res) => {
+        if (i == 1) {
+          this.setData({
+            slist: res.data.data.items
+          })
+        } else {
+          this.setData({
+            xlist: res.data.data.items
+          })
+        }
+        console.log(res.data)
+      },
+      complete: function (res) {
+        wx.hideLoading()
+        wx.stopPullDownRefresh()
+      }
+    })
+  },
   /**
  * 页面相关事件处理函数--监听用户下拉动作
  */
@@ -56,71 +83,28 @@ Page({
     wx.showLoading({
       title: '加载中......',
     })
-    wx.request({
-      url: 'https://106.52.255.36/api/v1/pub/lost/list',
-      header: {
-        'Authorization': wx.getStorageSync('token')
-      },
-      data: {
-        address: this.data.locationName,
-        type: '2',
-        limit: 10,
-        page: 1
-      },
-      success: (res) => {
-        _this.setData({
-          xlist: res.data.data.items
-        })
-      },
-      complete: function (res) {
-        wx.hideLoading()
-        wx.stopPullDownRefresh()
-      }
-    })
-    var query = wx.createSelectorQuery();
-    // var len = (wx.getStorageSync('read')).length;
-    // query.select('.exam').boundingClientRect(function (rect) {
-    //   _this.setData({
-    //     // 获取要循环标签的高度
-    //     // height: rect.height,
-    //     widHeight: 128 * len
-    //   })
-    // }).exec();
+    if(this.data.currentTab == 0){
+      var i=2 //寻物启事
+    }else{
+      var i=1
+    }
+    this.getdata(i)
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () { },
   onLoad: function (optins) {
-    var _this = this
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
-      })
-    }
-    wx.request({
-      url: 'https://106.52.255.36/api/v1/pub/lost/list',
-      header: {
-        'Authorization': wx.getStorageSync('token')
-      },
-      data: {
-        address: this.data.locationName,
-        type: '2',
-        limit: 10,
-        page: 1
-      },
-      success: (res) => {
-        _this.setData({
-          xlist: res.data.data.items
-        })
-        console.log(res.data)
-      }
-    })
+    this.getdata(1)
+    this.getdata(2)
   },
   onReady: function () {
+    // if (wx.getUserProfile) {
+    //   this.setData({
+    //     canIUseGetUserProfile: true
+    //   })
+    // }
     // var query = wx.createSelectorQuery();
     // var that = this;
     // var len = (wx.getStorageSync('read')).length;
@@ -133,7 +117,7 @@ Page({
     // }).exec();
   },
   onShow: function () {
-    if(wx.getStorageSync('location')!==''){
+    if (wx.getStorageSync('location') !== '') {
       this.setData({
         locationName: wx.getStorageSync('location')
       });

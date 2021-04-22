@@ -7,10 +7,7 @@
   <!-- 寻物启事 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地丢失"/>
-      <view class="photo">
-        <photo photoList="{{ photoList }}" bind:updatePhotoList="updatePhotoList"></photo>
-      </view>
+      <textarea bindinput="cal" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地丢失" />
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择区域" }}
       </view>
@@ -22,20 +19,21 @@
       <text>酬谢： ¥</text>
       <input type="number" bindinput="money" placeholder-style="text-align:center" placeholder="输入金额（人民币）" maxlength="6"/>
     </view>
-    <view class="type">
-      <text>分类：</text>
-      <view class="sort">
-      <view class='select' catchtap='selectTap'>
-        <text class='select_text'>{{selectData[index]}}</text>
+      <view class="type">
+        <text>分类：</text>
+        <view class="sort">
+        <view class='select' catchtap='selectTap'>
+          <text class='select_text'>{{selectData[index]}}</text>
+        </view>
+        <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*70):0}}rpx;'>
+          <text class='option' wx:for='{{selectData}}' wx:key='this'
+            data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
+        </view>
       </view>
-      <view class='option_box' style='height:{{show?(selectData.length>5?300:selectData.length*70):0}}rpx;'>
-        <text class='option' wx:for='{{selectData}}' wx:key='this'
-          data-index='{{index}}' catchtap='optionTap'>{{item}}</text>
-      </view>
-  </view>
     </view>
-    <view class="type">
-      <text>添加图片+</text>
+    <view class="type">添加图片</view>
+    <view class="type" style="border:0" photoList="{{ photoList }}"  bind:updatePhotoList="updatePhotoList">
+      <photo></photo>
     </view>
 
     <view class="post-btn">
@@ -71,7 +69,7 @@
   </view>
     </view>
     <view class="type">
-      <text>添加图片+</text>
+      <text>添加图片 📷</text>
     </view>
     <view class="post-btn">
       <button type="warn" plain="true" bindtap="spost" style="background: #ffffff;">确认发布</button>

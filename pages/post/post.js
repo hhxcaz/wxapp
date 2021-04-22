@@ -81,7 +81,7 @@ Page({
       title: '正在发布......',
     })
     wx.request({
-      url: 'https://106.52.255.36/api/v1/pri/lost/publish',
+      url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
       method:'POST',
       header: { 
         'Authorization': wx.getStorageSync('token')
@@ -108,7 +108,7 @@ Page({
       title: '正在发布......',
     })
     wx.request({
-      url: 'https://106.52.255.36/api/v1/pri/lost/publish',
+      url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
       method:'POST',
       header: { 
         'Authorization': wx.getStorageSync('token')

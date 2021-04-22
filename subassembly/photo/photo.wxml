@@ -8,6 +8,6 @@
   </view>
   <!-- 上传按钮 -->
   <view class="photo-cell-item" bindtap="uploadImg" wx:if="{{ photoList.length < 3 }}">
-    <image class="photo-cell-item-image" src="../../img/uploadPhtot.png"></image>
+    <image class="photo-cell-item-image" src="../../img/photo.png"></image>
   </view>
 </view>
