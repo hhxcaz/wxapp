@@ -45,10 +45,7 @@
   <!-- 失物招领 -->
   <swiper-item>
     <view style="position:relative">
-      <textarea value="{{info}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地拾取"/>
-      <view class="photo">
-        <photo photoList="{{ photoList }}" bind:updatePhotoList="updatePhotoList"></photo>
-      </view>
+      <textarea value="{{sinfo}}" bindinput="cals" maxlength="160" style="height:390rpx" placeholder="请输入物品的具体描述，何时何地拾取"/>
       <view class="location" bindtap="selectorCity">
         📍{{ locationName != null ? locationName : "未选择位置" }}
       </view>
@@ -70,6 +67,9 @@
     </view>
     <view class="type">
       <text>添加图片 📷</text>
+    </view>
+    <view class="type" style="border:0">
+      <photo photoList="{{ photoList }}"  bind:updatePhotoList="updatePhotoList"></photo>
     </view>
     <view class="post-btn">
       <button type="warn" plain="true" bindtap="spost" style="background: #ffffff;">确认发布</button>

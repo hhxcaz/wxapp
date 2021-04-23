@@ -64,7 +64,8 @@ Page({
   },
   cals: function (e) {
     this.setData({
-      num: 160 - e.detail.value.length
+      num: 160 - e.detail.value.length,
+      sinfo: e.detail.value
     })
   },
   /**
@@ -96,6 +97,11 @@ Page({
       },
       success: (res) => {
         console.log(res.data)
+        wx.showToast({
+          title: "恭喜，发布成功！",
+          icon: "success",
+          duration: 1000
+        });
       },
       complete: function (res) {
         wx.hideLoading()
@@ -103,7 +109,6 @@ Page({
     })
   },
   spost: function () {
-    console.log(this.data.money)
     wx.showLoading({
       title: '正在发布......',
     })
@@ -114,7 +119,7 @@ Page({
         'Authorization': wx.getStorageSync('token')
       },
       data: {
-        intro: this.data.xinfo,
+        intro: this.data.sinfo,
         address: this.data.locationName,
         image: this.data.photoList.toString(),
         categoryId: this.data.index,
@@ -122,6 +127,11 @@ Page({
       },
       success: (res) => {
         console.log(res.data)
+        wx.showToast({
+          title: "恭喜，发布成功！",
+          icon: "success",
+          duration: 1000
+        });
       },
       complete: function (res) {
         wx.hideLoading()
