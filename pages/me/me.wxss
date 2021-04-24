@@ -22,5 +22,5 @@
 }
 .right{
   position: absolute;
-  right: 28rpx;
+  right: 60rpx;
 }

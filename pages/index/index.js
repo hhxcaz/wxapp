@@ -5,11 +5,11 @@ const app = getApp()
 Page({
   data: {
     currentTab: 0,
+    choose: 6,
     selectorVisible: false,
     locationName: '南宁市'
   },
   swichNav: function (e) {
-
     var that = this;
     if (this.data.currentTab === e.target.dataset.current) {
       return false;
@@ -29,6 +29,12 @@ Page({
       selectorVisible: true,
     });
   },
+  choose: function(e){
+    this.setData({
+      choose: e.target.dataset.id,
+    });
+    this.getdata(2,e.target.dataset.id)
+  },
   // 当用户选择了组件中的城市之后的回调函数
   onSelectCity(e) {
     this.setData({
@@ -47,13 +53,14 @@ Page({
       url: '../logs/logs'
     })
   },
-  getdata(i) {
+  getdata(i,t) {
     wx.request({
       url: 'https://api.xunhuiwang.cn/api/v1/pub/lost/list',
       header: { 'Authorization': wx.getStorageSync('token') },
       data: {
         address: this.data.locationName,
         type: i,
+        cate: t,
         limit: 10,
         page: 1
       },
@@ -88,7 +95,7 @@ Page({
     }else{
       var i=1
     }
-    this.getdata(i)
+    this.getdata(i,0)
   },
 
   /**
@@ -96,8 +103,8 @@ Page({
    */
   onReachBottom: function () { },
   onLoad: function (optins) {
-    this.getdata(1)
-    this.getdata(2)
+    this.getdata(1,0)
+    this.getdata(2,0)
   },
   onReady: function () {
     // if (wx.getUserProfile) {
