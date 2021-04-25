@@ -41,11 +41,7 @@ Page({
       locationName: e.detail.city.fullname
     });
     wx.setStorageSync('location', e.detail.city.fullname)
-  },
-  calling: function () {
-    wx.makePhoneCall({
-      phoneNumber: '18677066237',
-    })
+    this.getdata(2,6)
   },
   // 事件处理函数
   bindViewTap() {
@@ -77,7 +73,12 @@ Page({
         console.log(res.data)
       },
       complete: function (res) {
-        wx.hideLoading()
+        // wx.hideLoading()
+        wx.showToast({
+          title: "获取成功",
+          icon: "success",
+          duration: 1000
+        });
         wx.stopPullDownRefresh()
       }
     })
@@ -87,9 +88,9 @@ Page({
  */
   onPullDownRefresh: function () {
     var _this = this;
-    wx.showLoading({
-      title: '加载中......',
-    })
+    // wx.showLoading({
+    //   title: '加载中......',
+    // })
     if(this.data.currentTab == 0){
       var i=2 //寻物启事
     }else{
