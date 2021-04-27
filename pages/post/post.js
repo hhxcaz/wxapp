@@ -81,32 +81,78 @@ Page({
     wx.showLoading({
       title: '正在发布......',
     })
-    wx.request({
-      url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
-      method:'POST',
-      header: { 
-        'Authorization': wx.getStorageSync('token')
-      },
-      data: {
-        intro: this.data.xinfo,
-        address: this.data.locationName,
-        image: this.data.photoList.toString(),
-        categoryId: this.data.index,
-        reward: this.data.money,
-        type: 2
-      },
-      success: (res) => {
-        console.log(res.data)
-        wx.showToast({
-          title: "恭喜，发布成功！",
-          icon: "success",
-          duration: 1000
-        });
-      },
-      complete: function (res) {
-        wx.hideLoading()
+    this.waitUpdateFile().then((res) => {
+      let photoList = this.data.photoList;
+      console.log(this.data.photoList);
+      console.log(photoList);
+      let imageString = "";
+      for(let a = 0;a < photoList.length;a++) {
+        console.log(photoList[a]);
+        if(photoList[a].realAddress) {
+          imageString += photoList[a].url;
+        }
       }
-    })
+      console.log(imageString);
+      wx.request({
+        url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish/s',
+        method:'POST',
+        header: { 
+          'Authorization': wx.getStorageSync('token')
+        },
+        data: {
+          intro: this.data.xinfo,
+          address: this.data.locationName,
+          image: imageString,
+          categoryId: this.data.index,
+          reward: this.data.money,
+          type: 2
+        },
+        success: (res) => {
+          console.log(res.data)
+          wx.showToast({
+            title: "恭喜，发布成功！",
+            icon: "success",
+            duration: 1000
+          });
+        },
+        complete: function (res) {
+          wx.hideLoading()
+        }
+      });
+    }
+    );
+  },
+  waitUpdateFile: function() {
+    let _this = this;
+    let photoList = this.data.photoList;
+    return new Promise(function (resolve, reject) {
+      (async function (){
+        //wx.uploadFile 接口每次只支持一张图片
+        for(let a = 0;a < photoList.length;a++) {
+          if(!photoList[a].realAddress) {
+            await wx.uploadFile({
+              url: 'https://api.xunhuiwang.cn/api/v1/pri/alioss/upload',
+              header: { 
+                'Authorization': wx.getStorageSync('token')
+              },
+              filePath: photoList[a].url,
+              name: "file",
+              success: (res) => {
+                res = JSON.parse(res.data).data;
+                photoList[a].url = res.url;
+                photoList[a].realAddress = true;
+              },
+              complete: (res) => {
+                _this.setData({
+                  photoList: photoList
+                });
+              }
+            });
+          }
+        }
+      })();
+      resolve();
+    });
   },
   spost: function () {
     wx.showLoading({

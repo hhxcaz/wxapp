@@ -42,8 +42,15 @@ Component({
               num = res.tempFilePaths.length;
             }
             res.tempFilePaths = res.tempFilePaths.slice(0,num);
+            let newPhotoList = [];
+            for(let a = 0;a < res.tempFilePaths.length;a++) {
+              newPhotoList[a] = {
+                url: res.tempFilePaths[a],
+                realAddress: false
+              };
+            }
             my.setData({
-              photoList: my.data.photoList.concat(res.tempFilePaths)
+              photoList: my.data.photoList.concat(newPhotoList)
             });
           }
         },
