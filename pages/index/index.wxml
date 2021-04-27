@@ -59,36 +59,6 @@
       </viwe>
       </view>
   </block>
-
-
-    <view class="card">
-      <view class="cardtop">
-        <view class="card-left">
-          <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
-          </view>
-          <view class="username">
-            GXCME-AI
-          </view>
-          <view class="time">刚刚</view>
-        </view>
-        <view class="card-right">
-          <view class="call" bindtap="calling">联系TA</view>
-          <view class="money">酬谢：¥66.6</view>
-        </view>
-      </view>
-
-      <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
-      </viwe>
-
-      <view class="imgs">
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-      </view>
-    </view>
-      
   </swiper-item>
 
   <!-- 失物招领 -->
@@ -114,6 +84,32 @@
       </viwe>
       </view>
   </block>
+  <view class="tip" wx:if="">空空如也，暂无更多数据哦</view>
+  <!-- <view class="card">
+      <view class="cardtop">
+        <view class="card-left">
+          <view class="avator">
+            <image src="../../img/type.png" style="width:50px;height:50px"></image>
+          </view>
+          <view class="username">
+            GXCME-AI
+          </view>
+          <view class="time">刚刚</view>
+        </view>
+        <view class="card-right">
+          <view class="call" bindtap="calling">联系TA</view>
+          <view class="money">酬谢：¥66.6</view>
+        </view>
+      </view>
+      <viwe class="info">
+        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
+      </viwe>
+      <view class="imgs">
+        <image src="../../img/1.png" style="width:110px;height:110px"></image>
+        <image src="../../img/1.png" style="width:110px;height:110px"></image>
+        <image src="../../img/1.png" style="width:110px;height:110px"></image>
+      </view>
+    </view> -->
   </swiper-item>
 </swiper>
 

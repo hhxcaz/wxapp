@@ -24,3 +24,8 @@
   position: absolute;
   right: 60rpx;
 }
+
+.logo{
+  width: 60rpx;
+  height: 60rpx;
+}
