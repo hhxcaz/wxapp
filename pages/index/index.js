@@ -34,7 +34,11 @@ Page({
     this.setData({
       choose: e.target.dataset.id,
     });
-    this.getdata(2,e.target.dataset.id)
+    if(this.data.currentTab){
+      this.getdata(1,e.target.dataset.id)
+    }else{
+      this.getdata(2,e.target.dataset.id)
+    }
   },
   // 当用户选择了组件中的城市之后的回调函数
   onSelectCity(e) {
