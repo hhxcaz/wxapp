@@ -131,14 +131,14 @@ page{
   padding-top: 16rpx;
 }
 .imgs{
-  margin: 16rpx 16rpx 0 0;
+  margin: 16rpx 0 0 0;
   display: flex;
   justify-content: flex-start;
 }
 .imgs image{
   width:110px;
   height:110px;
-  margin: 0 28rpx 0 0;
+  margin: 0 20rpx 0 0;
 }
 .tips{
   width: 100%;

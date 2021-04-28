@@ -7,6 +7,7 @@ Page({
     currentTab: 0,
     choose: 6,
     selectorVisible: false,
+    widHeight: 1200,
     locationName: '南宁市'
   },
   swichNav: function (e) {
@@ -48,6 +49,17 @@ Page({
     wx.navigateTo({
       url: '../logs/logs'
     })
+  },
+  getheight(){
+    var query = wx.createSelectorQuery();
+    var that = this;
+    console.log(wx.getStorageSync('xlist'))
+    var len = (wx.getStorageSync('xlist')).length;
+    query.select('.card').boundingClientRect(function (rect) {
+      that.setData({
+        widHeight: 220 * len
+      })
+    }).exec();
   },
   getdata(i,t) {
     wx.request({
@@ -105,14 +117,10 @@ Page({
     this.getdata(2,0)
   },
   onReady: function () {
-    var query = wx.createSelectorQuery();
-    var that = this;
-    var len = (wx.getStorageSync('xlist')).length;
-    query.select('.card').boundingClientRect(function (rect) {
-      that.setData({
-        widHeight: 288 * len
-      })
-    }).exec();
+    var that = this
+    setTimeout(function() {
+      that.getheight()
+      }, 100)
   },
   onShow: function () {
     if (wx.getStorageSync('location') !== '') {

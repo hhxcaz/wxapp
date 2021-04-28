@@ -34,7 +34,7 @@
 </view>
 
 <!--内容主体-->
-<swiper style='height:{{widHeight}}px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+<swiper style='height:{{widHeight == 0 ? 888 : widHeight}}px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
   <block wx:for="{{xlist}}" wx:key="index">
