@@ -135,7 +135,10 @@ page{
   display: flex;
   justify-content: space-between;
 }
-
+.imgs image{
+  width:110px;
+  height:110px
+}
 .tips{
   width: 100%;
   color: #666;

@@ -90,14 +90,14 @@ Page({
       wx.showLoading({ title: '正在发布......' })
       this.waitUpdateFile().then((res) => {
         let photos = this.data.photoList;
-        var imageString = "";
+        var images = [];
         for (let a = 0; a < photos.length; a++) {
           console.log(photos[0])
           if (photos[a].realAddress) {
-            imageString += photos[a].url;
+            images.push(photos[a].url);
           }
         }
-        console.log(imageString);
+        console.log(images)
         wx.request({
           url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
           method: 'POST',
@@ -107,7 +107,7 @@ Page({
           data: {
             intro: this.data.xinfo,
             address: this.data.locationName,
-            image: imageString,
+            image: images.toString(),
             categoryId: this.data.index,
             reward: this.data.money,
             type: 2

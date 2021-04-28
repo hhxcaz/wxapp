@@ -57,6 +57,9 @@
       <viwe class="info">
         {{item.intro}}
       </viwe>
+      <view class="imgs" wx:if="{{item.image !== ''}}">
+        <image wx:key="index" src="{{item.image}}"></image>
+      </view>
       </view>
   </block>
   <view class="tips" wx:if="{{xlist.length == 0}}">空空如也，暂无更多数据哦</view>
