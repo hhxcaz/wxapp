@@ -47,7 +47,7 @@
           <view class="username">
             {{item.user.nickname}}
           </view>
-          <view class="time">{{item.createTime}}</view>
+          <view class="time">{{item.formatTime}}</view>
         </view>
         <view class="card-right">
           <view class="call">联系TA</view>
@@ -59,6 +59,7 @@
       </viwe>
       </view>
   </block>
+  <view class="tips" wx:if="{{xlist.length == 0}}">空空如也，暂无更多数据哦</view>
   </swiper-item>
 
   <!-- 失物招领 -->
@@ -73,7 +74,7 @@
           <view class="username">
             {{item.user.nickname}}
           </view>
-          <view class="time">{{item.createTime}}</view>
+          <view class="time">{{item.formatTime}}</view>
         </view>
         <view class="card-right">
           <view class="call">联系TA</view>
@@ -84,7 +85,7 @@
       </viwe>
       </view>
   </block>
-  <view class="tip" wx:if="">空空如也，暂无更多数据哦</view>
+  <view class="tips" wx:if="{{slist.length == 0}}">空空如也，暂无更多数据哦</view>
   <!-- <view class="card">
       <view class="cardtop">
         <view class="card-left">

@@ -135,3 +135,10 @@ page{
   display: flex;
   justify-content: space-between;
 }
+
+.tips{
+  width: 100%;
+  color: #666;
+  text-align: center;
+  line-height: 600rpx;
+}

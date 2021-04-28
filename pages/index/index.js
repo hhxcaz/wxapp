@@ -73,7 +73,6 @@ Page({
         console.log(res.data)
       },
       complete: function (res) {
-        // wx.hideLoading()
         wx.showToast({
           title: "获取成功",
           icon: "success",
@@ -87,10 +86,6 @@ Page({
  * 页面相关事件处理函数--监听用户下拉动作
  */
   onPullDownRefresh: function () {
-    var _this = this;
-    // wx.showLoading({
-    //   title: '加载中......',
-    // })
     if(this.data.currentTab == 0){
       var i=2 //寻物启事
     }else{

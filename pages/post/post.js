@@ -4,6 +4,8 @@ Page({
     num: 160,
     snum: 160,
     currentTab: 0,
+    xinfo: '',
+    sinfo: '',
     selectorVisible: false,
     selectData: ['手机数码', '卡证钱包', '宠物', '其他'],
     index: 0, //选择的下拉列表下标
@@ -72,67 +74,71 @@ Page({
    * 自定义子组件更新 PhotoList 参数
    * @param {*} e 
    */
-  updatePhotoList: function(e) {
+  updatePhotoList: function (e) {
     this.setData({
       photoList: e.detail.photoList
     });
   },
   xpost: function () {
-    wx.showLoading({
-      title: '正在发布......',
-    })
-    this.waitUpdateFile().then((res) => {
-      let photoList = this.data.photoList;
-      console.log(this.data.photoList);
-      console.log(photoList);
-      let imageString = "";
-      for(let a = 0;a < photoList.length;a++) {
-        console.log(photoList[a]);
-        if(photoList[a].realAddress) {
-          imageString += photoList[a].url;
-        }
-      }
-      console.log(imageString);
-      wx.request({
-        url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish/s',
-        method:'POST',
-        header: { 
-          'Authorization': wx.getStorageSync('token')
-        },
-        data: {
-          intro: this.data.xinfo,
-          address: this.data.locationName,
-          image: imageString,
-          categoryId: this.data.index,
-          reward: this.data.money,
-          type: 2
-        },
-        success: (res) => {
-          console.log(res.data)
-          wx.showToast({
-            title: "恭喜，发布成功！",
-            icon: "success",
-            duration: 1000
-          });
-        },
-        complete: function (res) {
-          wx.hideLoading()
-        }
+    if (this.data.xinfo == '') {
+      wx.showToast({
+        title: "尚未填写发布内容",
+        icon: "none",
+        duration: 1000
       });
+    } else {
+      wx.showLoading({ title: '正在发布......' })
+      this.waitUpdateFile().then((res) => {
+        let photos = this.data.photoList;
+        var imageString = "";
+        for (let a = 0; a < photos.length; a++) {
+          console.log(photos[0])
+          if (photos[a].realAddress) {
+            imageString += photos[a].url;
+          }
+        }
+        console.log(imageString);
+        wx.request({
+          url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
+          method: 'POST',
+          header: {
+            'Authorization': wx.getStorageSync('token')
+          },
+          data: {
+            intro: this.data.xinfo,
+            address: this.data.locationName,
+            image: imageString,
+            categoryId: this.data.index,
+            reward: this.data.money,
+            type: 2
+          },
+          success: (res) => {
+            console.log(res.data)
+            wx.showToast({
+              title: "恭喜，发布成功！",
+              icon: "success",
+              duration: 1000
+            });
+          },
+          complete: function (res) {
+
+          }
+        });
+      }
+      );
     }
-    );
   },
-  waitUpdateFile: function() {
+  waitUpdateFile: function () {
     let _this = this;
     let photoList = this.data.photoList;
     return new Promise(function (resolve, reject) {
-      (async function (){
+      (async function () {
         //wx.uploadFile 接口每次只支持一张图片
-        for(let a = 0;a < photoList.length;a++) {
-          if(!photoList[a].realAddress) {
+        for (let a = 0; a < photoList.length; a++) {
+          if (!photoList[a].realAddress) {
             await wx.uploadFile({
               url: 'https://api.xunhuiwang.cn/api/v1/pri/alioss/upload',
-              header: { 
+              header: {
                 'Authorization': wx.getStorageSync('token')
               },
               filePath: photoList[a].url,
@@ -160,8 +166,8 @@ Page({
     })
     wx.request({
       url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
-      method:'POST',
-      header: { 
+      method: 'POST',
+      header: {
         'Authorization': wx.getStorageSync('token')
       },
       data: {
@@ -188,20 +194,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     getApp().login(); //每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
-    if(wx.getStorageSync('location')!==''){
+    if (wx.getStorageSync('location') !== '') {
       this.setData({
         locationName: wx.getStorageSync('location')
       });
@@ -218,7 +224,7 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
