@@ -34,7 +34,7 @@
 </view>
 
 <!--内容主体-->
-<swiper style='height:1000px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+<swiper style='height:{{widHeight}}px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
   <block wx:for="{{xlist}}" wx:key="index">
@@ -57,8 +57,8 @@
       <viwe class="info">
         {{item.intro}}
       </viwe>
-      <view class="imgs" wx:if="{{item.image !== ''}}">
-        <image wx:key="index" src="{{item.image}}"></image>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
       </view>
       </view>
   </block>

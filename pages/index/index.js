@@ -65,10 +65,12 @@ Page({
           this.setData({
             slist: res.data.data.items
           })
+          wx.setStorageSync('slist', res.data.data.items)
         } else {
           this.setData({
             xlist: res.data.data.items
           })
+          wx.setStorageSync('xlist', res.data.data.items)
         }
         console.log(res.data)
       },
@@ -103,21 +105,14 @@ Page({
     this.getdata(2,0)
   },
   onReady: function () {
-    // if (wx.getUserProfile) {
-    //   this.setData({
-    //     canIUseGetUserProfile: true
-    //   })
-    // }
-    // var query = wx.createSelectorQuery();
-    // var that = this;
-    // var len = (wx.getStorageSync('read')).length;
-    // query.select('.exam').boundingClientRect(function (rect) {
-    //   that.setData({
-    //     // 获取要循环标签的高度
-    //     // height: rect.height,
-    //     widHeight: 128 * len
-    //   })
-    // }).exec();
+    var query = wx.createSelectorQuery();
+    var that = this;
+    var len = (wx.getStorageSync('xlist')).length;
+    query.select('.card').boundingClientRect(function (rect) {
+      that.setData({
+        widHeight: 288 * len
+      })
+    }).exec();
   },
   onShow: function () {
     if (wx.getStorageSync('location') !== '') {
