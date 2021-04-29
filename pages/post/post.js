@@ -126,59 +126,35 @@ Page({
     }
   },
   waitUpdateFile: function () {
-    return new Promise((resolve, reject) => {
-      let promiseList = [];
-      //wx.uploadFile 接口每次只支持一张图片
-      for (let a = 0; a < this.data.photoList.length; a++) {
-        if (!this.data.photoList[a].realAddress) {
-          let promise = new Promise((resolve, reject) => {
-            wx.uploadFile({
-              url: 'https://api.xunhuiwang.cn/api/v1/pri/alioss/upload',
-              header: {
-                'Authorization': wx.getStorageSync('token')
-              },
-              filePath: this.data.photoList[a].url,
-              name: "file",
-              success: (res) => {
-                res = JSON.parse(res.data).data;
-                this.data.photoList[a].url = res.url;
-                this.data.photoList[a].realAddress = true;
-              },
-              complete: (res) => {
-                this.setData({
-                  photoList: this.data.photoList
-                });
-                resolve()
-              }
-            });
+    let promiseList = [];
+    //wx.uploadFile 接口每次只支持一张图片
+    for (let a = 0; a < this.data.photoList.length; a++) {
+      if (!this.data.photoList[a].realAddress) {
+        let promise = new Promise((resolve, reject) => {
+          wx.uploadFile({
+            url: 'https://api.xunhuiwang.cn/api/v1/pri/alioss/upload',
+            header: {
+              'Authorization': wx.getStorageSync('token')
+            },
+            filePath: this.data.photoList[a].url,
+            name: "file",
+            success: (res) => {
+              res = JSON.parse(res.data).data;
+              this.data.photoList[a].url = res.url;
+              this.data.photoList[a].realAddress = true;
+            },
+            complete: (res) => {
+              this.setData({
+                photoList: this.data.photoList
+              });
+              resolve()
+            }
           });
-          promiseList.push(promise);
-        }
-      }
-      let a = 0;
-      if(a < promiseList.length) {
-        promiseList[a].then( () => {
-          if(++a < promiseList.length) {
-            promiseList[a].then( () => {
-              if(++a < promiseList.length) {
-                promiseList[a].then( () => {
-                  resolve();
-                });
-              }
-              else {
-                resolve();
-              }
-            });
-          }
-          else {
-            resolve();
-          }
         });
+        promiseList.push(promise);
       }
-      else {
-        resolve();
-      }
-    });
+    }
+    return Promise.all(promiseList);
   },
   spost: function () {
     wx.showLoading({
