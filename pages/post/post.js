@@ -88,13 +88,11 @@ Page({
       });
     } else {
       wx.showLoading({ title: '正在发布......' })
-      this.waitUpdateFile().then((res) => {
-        let photos = this.data.photoList;
+      this.waitUpdateFile().then(() => {
         var images = [];
-        for (let a = 0; a < photos.length; a++) {
-          console.log(photos[0])
-          if (photos[a].realAddress) {
-            images.push(photos[a].url);
+        for (let a = 0; a < this.data.photoList.length; a++) {
+          if (this.data.photoList[a].realAddress) {
+            images.push(this.data.photoList[a].url);
           }
         }
         console.log(images)
@@ -121,43 +119,65 @@ Page({
             });
           },
           complete: function (res) {
-
+  
           }
         });
-      }
-      );
+      });
     }
   },
   waitUpdateFile: function () {
-    let _this = this;
-    let photoList = this.data.photoList;
-    return new Promise(function (resolve, reject) {
-      (async function () {
-        //wx.uploadFile 接口每次只支持一张图片
-        for (let a = 0; a < photoList.length; a++) {
-          if (!photoList[a].realAddress) {
-            await wx.uploadFile({
+    return new Promise((resolve, reject) => {
+      let promiseList = [];
+      //wx.uploadFile 接口每次只支持一张图片
+      for (let a = 0; a < this.data.photoList.length; a++) {
+        if (!this.data.photoList[a].realAddress) {
+          let promise = new Promise((resolve, reject) => {
+            wx.uploadFile({
               url: 'https://api.xunhuiwang.cn/api/v1/pri/alioss/upload',
               header: {
                 'Authorization': wx.getStorageSync('token')
               },
-              filePath: photoList[a].url,
+              filePath: this.data.photoList[a].url,
               name: "file",
               success: (res) => {
                 res = JSON.parse(res.data).data;
-                photoList[a].url = res.url;
-                photoList[a].realAddress = true;
+                this.data.photoList[a].url = res.url;
+                this.data.photoList[a].realAddress = true;
               },
               complete: (res) => {
-                _this.setData({
-                  photoList: photoList
+                this.setData({
+                  photoList: this.data.photoList
                 });
+                resolve()
+              }
+            });
+          });
+          promiseList.push(promise);
+        }
+      }
+      let a = 0;
+      if(a < promiseList.length) {
+        promiseList[a].then( () => {
+          if(++a < promiseList.length) {
+            promiseList[a].then( () => {
+              if(++a < promiseList.length) {
+                promiseList[a].then( () => {
+                  resolve();
+                });
+              }
+              else {
+                resolve();
               }
             });
           }
-        }
-      })();
-      resolve();
+          else {
+            resolve();
+          }
+        });
+      }
+      else {
+        resolve();
+      }
     });
   },
   spost: function () {
