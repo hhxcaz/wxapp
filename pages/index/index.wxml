@@ -11,24 +11,24 @@
   <view class="tab-item {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">失物招领</view>
 </view>
 <view class="typebox">
-  <view class="type {{choose == 6 ? 'on' : ''}}" bindtap="choose">
-    <image src="../../img/all.png" class="typeimg" data-id="6"></image>
+  <view class="type {{choose == 0 ? 'on' : ''}}" bindtap="choose">
+    <image src="../../img/all.png" class="typeimg" data-id="0"></image>
     <text>综合</text>
   </view>
-  <view class="type {{choose == 0 ? 'on' : ''}}" bindtap="choose">
-    <image src="../../img/moblie.png" class="typeimg" data-id="0"></image>
+  <view class="type {{choose == 1 ? 'on' : ''}}" bindtap="choose">
+    <image src="../../img/moblie.png" class="typeimg" data-id="1"></image>
     <text>手机数码</text>
   </view>
-  <view class="type {{choose == 1 ? 'on' : ''}}" bindtap="choose">
-    <image src="../../img/wallet.png" class="typeimg" data-id="1"></image>
+  <view class="type {{choose == 2 ? 'on' : ''}}" bindtap="choose">
+    <image src="../../img/wallet.png" class="typeimg" data-id="2"></image>
     <text>卡证钱包</text>
   </view>
-  <view class="type {{choose == 2 ? 'on' : ''}}" bindtap="choose">
-    <image src="../../img/pet.png" class="typeimg" data-id="2"></image>
+  <view class="type {{choose == 3 ? 'on' : ''}}" bindtap="choose">
+    <image src="../../img/pet.png" class="typeimg" data-id="3"></image>
     <text>宠物</text>
   </view>
-  <view class="type {{choose == 3 ? 'on' : ''}}" bindtap="choose">
-    <image src="../../img/other.png" class="typeimg" data-id="3"></image>
+  <view class="type {{choose == 4 ? 'on' : ''}}" bindtap="choose">
+    <image src="../../img/other.png" class="typeimg" data-id="4"></image>
     <text>其他</text>
   </view>
 </view>
@@ -63,11 +63,12 @@
       </view>
   </block>
   <view class="tips" wx:if="{{xlist.length == 0}}">空空如也，暂无更多数据哦</view>
+  <button wx:if="{{limit < xnum}}" style="font-size:15px" bindtap="more" data-id="x">加载更多</button>
   </swiper-item>
 
   <!-- 失物招领 -->
   <swiper-item>
-    <block wx:for="{{slist}}" wx:key="index">
+  <block wx:for="{{slist}}" wx:key="index">
       <view class="card">
       <view class="cardtop">
         <view class="card-left">
@@ -86,34 +87,13 @@
       <viwe class="info">
         {{item.intro}}
       </viwe>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
+      </view>
       </view>
   </block>
   <view class="tips" wx:if="{{slist.length == 0}}">空空如也，暂无更多数据哦</view>
-  <!-- <view class="card">
-      <view class="cardtop">
-        <view class="card-left">
-          <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
-          </view>
-          <view class="username">
-            GXCME-AI
-          </view>
-          <view class="time">刚刚</view>
-        </view>
-        <view class="card-right">
-          <view class="call" bindtap="calling">联系TA</view>
-          <view class="money">酬谢：¥66.6</view>
-        </view>
-      </view>
-      <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
-      </viwe>
-      <view class="imgs">
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-      </view>
-    </view> -->
+  <button wx:if="{{limit < snum}}" style="font-size:15px" bindtap="more" data-id="s">加载更多</button>
   </swiper-item>
 </swiper>
 

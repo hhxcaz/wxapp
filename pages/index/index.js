@@ -1,13 +1,13 @@
 // index.js
 // 获取应用实例
 const app = getApp()
-
 Page({
   data: {
     currentTab: 0,
-    choose: 6,
+    choose: 0,
     selectorVisible: false,
     widHeight: 1200,
+    limit: 10,
     locationName: '南宁市'
   },
   swichNav: function (e) {
@@ -29,6 +29,21 @@ Page({
     this.setData({
       selectorVisible: true,
     });
+  },
+  more: function (e) {
+    if(e.target.dataset.id == 'x'){
+        this.setData({
+          limit: this.data.limit+10
+        });
+        this.getdata(2,0)
+        this.getheight
+    }else{
+      this.setData({
+        limit: this.data.limit+10
+      });
+      this.getdata(1,0)
+      this.getheight
+    }
   },
   choose: function(e){
     this.setData({
@@ -57,8 +72,8 @@ Page({
   getheight(){
     var query = wx.createSelectorQuery();
     var that = this;
-    console.log(wx.getStorageSync('xlist'))
     var len = (wx.getStorageSync('xlist')).length;
+    console.log(len)
     query.select('.card').boundingClientRect(function (rect) {
       that.setData({
         widHeight: 220 * len
@@ -73,18 +88,20 @@ Page({
         address: this.data.locationName,
         type: i,
         cate: t,
-        limit: 10,
+        limit: this.data.limit,
         page: 1
       },
       success: (res) => {
         if (i == 1) {
           this.setData({
-            slist: res.data.data.items
+            slist: res.data.data.items,
+            snum: res.data.data.total
           })
           wx.setStorageSync('slist', res.data.data.items)
         } else {
           this.setData({
-            xlist: res.data.data.items
+            xlist: res.data.data.items,
+            xnum: res.data.data.total
           })
           wx.setStorageSync('xlist', res.data.data.items)
         }

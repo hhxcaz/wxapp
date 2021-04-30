@@ -37,7 +37,7 @@
         "pagePath": "pages/post/post",
         "text": "发布",
         "iconPath": "/img/post.png",
-        "selectedIconPath": "/img/post.png"
+        "selectedIconPath": "/img/posted.png"
       },
       {
         "pagePath": "pages/me/me",
