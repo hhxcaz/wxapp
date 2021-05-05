@@ -21,6 +21,27 @@ Page({
       url: '../me/history'
     })
   },
+  ai: function(e){
+    let that = this
+    if(e.detail.value){
+      wx.showModal({
+        title: "温馨提示", 
+        content: "打开AI后，系统可能会匹配到潜在的相似物品，并推送通知", 
+        cancelText: "算了",
+        confirmText: "确定",
+        success: function (res) {
+          if (res.cancel) { //点击取消
+             that.setData({
+              switch1Checked: false
+            })
+          } else {
+            console.log(123)
+          }
+       },
+      })
+    }
+    
+  },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({

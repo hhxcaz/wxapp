@@ -28,5 +28,5 @@
 
   <view class="history">
       <text>AI帮你找</text>
-      <switch checked="{{switch1Checked}}" bindchange="lost" style="transform:scale(.68);margin-right: -10rpx;"/>
+      <switch checked="{{switch1Checked}}" bindchange="ai" style="transform:scale(.68);margin-right: -10rpx;"/>
   </view>
