@@ -117,6 +117,11 @@ Page({
               icon: "success",
               duration: 1000
             });
+            setTimeout(function() {
+              wx.switchTab({
+                url: '../index/index'
+              })
+              }, 800)
           },
           complete: function (res) {
   

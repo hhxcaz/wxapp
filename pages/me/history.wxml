@@ -8,7 +8,7 @@
 <swiper style='height:1000px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
-    <text>展示中</text>
+    <text class="tip">展示中</text>
     <view class="card">
       <view class="cardtop">
         <view class="card-left">
@@ -37,7 +37,7 @@
       </view>
     </view>
 
-    <text>已撤销</text>
+    <text class="tip">已撤销</text>
     <view class="card">
       <view class="cardtop">
         <view class="card-left">
@@ -59,7 +59,7 @@
       </viwe>
       </view>
 
-      <text>已完成</text>
+      <text class="tip">已完成</text>
     <view class="card">
       <view class="cardtop">
         <view class="card-left">
@@ -80,8 +80,6 @@
         今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
       </viwe>
       </view>
-
-      
   </swiper-item>
 
   <!-- 失物招领 -->

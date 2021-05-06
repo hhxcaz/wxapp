@@ -16,6 +16,20 @@ Page({
       })
     }
   },
+  xdata: function (a,b) {
+    wx.request({
+      url: 'https://api.xunhuiwang.cn/api/v1/pri/user/tel',
+      header: { 'Authorization': wx.getStorageSync('token') },
+      method: 'POST',
+      data: {
+        ai: a,
+        phone: b
+      },
+      success: (res) => {
+        console.log(res.data)
+      }
+    })
+  },
   record: function () {
     wx.navigateTo({
       url: '../me/history'
@@ -35,12 +49,11 @@ Page({
               switch1Checked: false
             })
           } else {
-            console.log(123)
+              that.xdata(true,'18677066288')
           }
        },
       })
     }
-    
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
