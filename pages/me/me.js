@@ -3,7 +3,7 @@ Page({
 
   data: {
     motto: 'Hello World',
-    userInfo: {},
+    tel: 1867708899,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
@@ -16,14 +16,13 @@ Page({
       })
     }
   },
-  xdata: function (a,b) {
+  xdata: function (a) {
     wx.request({
       url: 'https://api.xunhuiwang.cn/api/v1/pri/user/tel',
       header: { 'Authorization': wx.getStorageSync('token') },
       method: 'POST',
       data: {
-        ai: a,
-        phone: b
+        ai: a
       },
       success: (res) => {
         console.log(res.data)
@@ -49,7 +48,7 @@ Page({
               switch1Checked: false
             })
           } else {
-              that.xdata(true,'18677066288')
+              that.xdata(true)
           }
        },
       })

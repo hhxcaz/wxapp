@@ -9,82 +9,119 @@
   <!-- 寻物启事 -->
   <swiper-item>
     <text class="tip">展示中</text>
-    <view class="card">
+    <block wx:for="{{xlist}}" wx:key="index">
+      <view class="card" wx:if="{{item.status}}">
       <view class="cardtop">
         <view class="card-left">
           <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
           </view>
           <view class="username">
-            GXCME-AI
+            {{item.user.nickname}}
           </view>
-          <view class="time">刚刚</view>
+          <view class="time">{{item.createTime}}</view>
         </view>
-        <view class="card-right">
-          <view class="call" bindtap="calling">撤销 / 删除</view>
-          <view class="money">酬谢：¥66.6</view>
+        <view class="card-right dob">
+          <view class="call" bindtap="calling">完成</view>
+          <view style="width:8rpx"></view>
+          <view class="delete" data-id="{{item.id}}" data-type="2" bindtap="delete">删除</view>
+          <view class="money" wx:if="{{item.reward !== 0}}">酬谢：¥{{item.reward}}</view>
         </view>
       </view>
-
       <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
+        {{item.intro}}
       </viwe>
-
-      <view class="imgs">
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
-        <image src="../../img/1.png" style="width:110px;height:110px"></image>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
       </view>
-    </view>
-
-    <text class="tip">已撤销</text>
-    <view class="card">
+      </view>
+  </block>
+  <view wx:if="{{xlist.length == 0}}" class="card" style="text-align:center;color:#999">暂无</view>
+    <text class="tip">已完成</text>
+    <block wx:for="{{xlist}}" wx:key="index">
+      <view class="card" wx:if="{{item.status == 2}}">
       <view class="cardtop">
         <view class="card-left">
           <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
           </view>
           <view class="username">
-            GXCME-AI
+            {{item.user.nickname}}
           </view>
-          <view class="time">6小时前</view>
+          <view class="time">{{item.createTime}}</view>
         </view>
-        <view class="card-right">
-          <view class="call">重新发布</view>
-          <view class="money">酬谢：¥66.6</view>
+        <view class="card-right dob">
+          <view class="delete" data-id="{{item.id}}" data-type="2" bindtap="delete">删除</view>
+          <view class="money" wx:if="{{item.reward !== 0}}">酬谢：¥{{item.reward}}</view>
         </view>
       </view>
       <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
+        {{item.intro}}
       </viwe>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
       </view>
-
-      <text class="tip">已完成</text>
-    <view class="card">
-      <view class="cardtop">
-        <view class="card-left">
-          <view class="avator">
-            <image src="../../img/type.png" style="width:50px;height:50px"></image>
-          </view>
-          <view class="username">
-            GXCME-AI
-          </view>
-          <view class="time">6小时前</view>
-        </view>
-        <view class="card-right">
-          <view class="delete">删除</view>
-          <view class="money">酬谢：¥66.6</view>
-        </view>
       </view>
-      <viwe class="info">
-        今天上午在6教601落了一个新的U盘，带USBC的，有人捡到的话麻烦还给我，里面有复习资料，有酬谢！！！
-      </viwe>
-      </view>
+  </block>
+  <view wx:if="{{xlist.length == 0}}" class="card" style="text-align:center;color:#999">暂无</view>
   </swiper-item>
 
   <!-- 失物招领 -->
   <swiper-item>
-    <view class="title">列表</view>
+    <text class="tip">展示中</text>
+    <block wx:for="{{slist}}" wx:key="index">
+      <view class="card" wx:if="{{item.status}}">
+      <view class="cardtop">
+        <view class="card-left">
+          <view class="avator">
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
+          </view>
+          <view class="username">
+            {{item.user.nickname}}
+          </view>
+          <view class="time">{{item.createTime}}</view>
+        </view>
+        <view class="card-right dob">
+          <view class="call" bindtap="calling">完成</view>
+          <view style="width:8rpx"></view>
+          <view class="delete" data-id="{{item.id}}" data-type="1" bindtap="delete">删除</view>
+        </view>
+      </view>
+      <viwe class="info">
+        {{item.intro}}
+      </viwe>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
+      </view>
+      </view>
+  </block>
+  <view wx:if="{{slist.length == 0}}" class="card" style="text-align:center;color:#999">暂无</view>
 
+    <text class="tip">已完成</text>
+    <block wx:for="{{slist}}" wx:key="index">
+      <view class="card" wx:if="{{item.status == 2}}">
+      <view class="cardtop">
+        <view class="card-left">
+          <view class="avator">
+            <image src="{{item.user.avatar}}" style="width:50px;height:50px"></image>
+          </view>
+          <view class="username">
+            {{item.user.nickname}}
+          </view>
+          <view class="time">{{item.createTime}}</view>
+        </view>
+        <view class="card-right dob">
+          <view class="delete" data-id="{{item.id}}" data-type="1" bindtap="delete">删除</view>
+        </view>
+      </view>
+      <viwe class="info">
+        {{item.intro}}
+      </viwe>
+      <view class="imgs" wx:if="{{item.image[0] !== ''}}">
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
+      </view>
+      </view>
+  </block>
+  <view wx:if="{{slist.length == 0}}" class="card" style="text-align:center;color:#999">暂无</view>
   </swiper-item>
 </swiper>

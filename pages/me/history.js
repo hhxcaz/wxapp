@@ -7,6 +7,34 @@ Page({
   data: {
     currentTab: 0,
   },
+  getdata(i) {
+    wx.request({
+      url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/my',
+      header: { 'Authorization': wx.getStorageSync('token') },
+      data: {
+        type: i
+      },
+      success: (res) => {
+        if (i == 1) {
+          this.setData({
+            slist: res.data.data.lost.items,
+          })
+        } else {
+          this.setData({
+            xlist: res.data.data.lost.items,
+          })
+        }
+        console.log(res.data)
+      },
+      complete: function (res) {
+        wx.showToast({
+          title: "获取成功",
+          icon: "success",
+          duration: 1000
+        });
+      }
+    })
+  },
   swichNav: function (e) {
     console.log(e);
     var that = this;
@@ -24,11 +52,34 @@ Page({
       currentTab: e.detail.current,
     })
   },
+  delete: function(e){
+    wx.showModal({
+      title: "温馨提示", 
+      content: "确定彻底删除此条信息？", 
+      cancelText: "否",
+      confirmText: "是",
+      success: function (res) {
+       
+     },
+    })
+  },
+  complete: function(e){
+    wx.showModal({
+      title: "温馨提示", 
+      content: "是否将此条信息设为已完成？", 
+      cancelText: "否",
+      confirmText: "是",
+      success: function (res) {
+       
+     },
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getdata(1)
+    this.getdata(2)
   },
 
   /**

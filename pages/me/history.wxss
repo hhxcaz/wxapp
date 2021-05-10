@@ -88,6 +88,8 @@ page{
 .avator{
   width: 100rpx;
   height: 100rpx;
+  border-radius: 100rpx;
+  overflow: hidden;
 }
 .username{
   padding:6rpx 16rpx;
@@ -144,4 +146,7 @@ page{
   color: #666;
   font-size: 15px;
   margin-left: 18rpx;
+}
+.dob{
+  display: inline-flex;
 }
