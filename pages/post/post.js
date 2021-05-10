@@ -95,7 +95,6 @@ Page({
             images.push(this.data.photoList[a].url);
           }
         }
-        console.log(images)
         wx.request({
           url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
           method: 'POST',

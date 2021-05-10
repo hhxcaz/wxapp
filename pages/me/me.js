@@ -2,8 +2,10 @@
 Page({
 
   data: {
-    motto: 'Hello World',
-    tel: 1867708899,
+    avatarUrl: getApp().userData.avatarUrl,
+    nickName: getApp().userData.nickName,
+    tel: getApp().userData.phone,
+    switch1Checked: getApp().userData.ai,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
@@ -25,9 +27,20 @@ Page({
         ai: a
       },
       success: (res) => {
-        console.log(res.data)
+        console.log(res.data);
+      },
+      complete: () => {
+        wx.request({
+          url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
+          header: { 'Authorization': wx.getStorageSync('token') },
+          method: 'GET',
+          success: (res) => {
+            getApp().updateUserData(res.data.data);
+            this.UpdateUserData();
+          }
+        });
       }
-    })
+    });
   },
   record: function () {
     wx.navigateTo({
@@ -44,14 +57,16 @@ Page({
         confirmText: "确定",
         success: function (res) {
           if (res.cancel) { //点击取消
-             that.setData({
-              switch1Checked: false
-            })
-          } else {
-              that.xdata(true)
+            that.xdata(false);
+          }
+          else {
+            that.xdata(true);
           }
        },
-      })
+      });
+    }
+    else {
+      that.xdata(false);
     }
   },
   getUserProfile(e) {
@@ -79,9 +94,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    getApp().login();//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
+    getApp().login().then(() => { this.UpdateUserData(); });//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
   },
-
+  /**
+   * 重新加载 UserData 的数据信息
+   * (由于login的异步原因可能导致UserData在login结束后要重新加载)
+   * (如果更新了UserData的数据则也要调用该方法重新加载UserData)
+   */
+  UpdateUserData() {
+    this.setData({
+      avatarUrl: getApp().userData.avatarUrl,
+      nickName: getApp().userData.nickName,
+      tel: getApp().userData.phone,
+      switch1Checked: getApp().userData.ai,
+    });
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

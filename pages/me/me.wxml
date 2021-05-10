@@ -11,14 +11,14 @@
       <view wx:else> 请使用1.4.4及以上版本基础库 </view>
     </block>
     <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{ avatarUrl ? avatarUrl : userInfo.avatarUrl }}" mode="cover"></image>
+      <text class="userinfo-nickname">{{ nickName ? nickName : userInfo.nickName}}</text>
     </block>
   </view>
 
   <view class="history">
       <text>联系电话</text>
-      <text style="color:#999">{{tel}}</text>
+      <text style="color:#999">{{ tel ? tel : "未设置" }}</text>
       <image class="logo" src="../../img/change.png" mode="cover"></image>
   </view>
   
