@@ -9,7 +9,89 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    phone: {
+      showModal: false,
+      timerNum: 60,
+      theString: "获取验证码",
+      phoneNum: "",
+      codeNum: ""
+    }
+  },
+  /**
+   * 把修改 phone 数据的方法包装起来，这样后续调用不用占那么多行
+   * @param {*} showModal 
+   * @param {*} timerNum 
+   * @param {*} theString 
+   * @param {*} phoneNum 
+   * @param {*} codeNum 
+   */
+  updatePhone(showModal,timerNum,theString,phoneNum,codeNum) {
+    this.setData({
+      phone: {
+        showModal: showModal,
+        timerNum: timerNum,
+        theString: theString,
+        phoneNum: phoneNum,
+        codeNum: codeNum
+      }
+    });
+  },
+  phoneShowModal() {
+    this.updatePhone(true,this.data.phone.timerNum,this.data.phone.theString,this.data.phone.phoneNum,this.data.phone.codeNum);
+  },
+  phoneOnCancel() {
+    this.updatePhone(false,this.data.phone.timerNum,this.data.phone.theString,this.data.phone.phoneNum,this.data.phone.codeNum);
+  },
+  phoneValueUpdate(e) {
+    this.updatePhone(this.data.phone.showModal,this.data.phone.timerNum,this.data.phone.theString,e.detail.phoneNum,this.data.phone.codeNum);
+  },
+  phoneOnConfirm() {
+    if(this.data.phone.phoneNum.length != 11) {
+      wx.showToast({
+        title: "手机号码格式不正确，请检查",
+        icon: "none",
+        duration: 1000
+      });
+    }
+    else {
+      wx.request({
+        url: 'https://api.xunhuiwang.cn/api/v1/pri/user/tel',
+        header: { 'Authorization': wx.getStorageSync('token') },
+        method: 'POST',
+        data: {
+          phone: this.data.phone.phoneNum
+        },
+        success: (res) => {
+          if(res.data.success) {
+            wx.showToast({
+              title: "手机号码更新成功",
+              icon: "none",
+              duration: 1000
+            });
+            this.updatePhone(false,this.data.phone.timerNum,this.data.phone.theString,"","");
+          }
+          else {
+            wx.showToast({
+              title: res.data.message,
+              icon: "none",
+              duration: 1000
+            });
+          }
+        },
+        complete: () => {
+          wx.request({
+            url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
+            header: { 'Authorization': wx.getStorageSync('token') },
+            method: 'GET',
+            success: (res) => {
+              getApp().updateUserData(res.data.data);
+              this.UpdateUserData();
+            }
+          });
+        }
+      });
+    }
   },
   onLoad() {
     if (wx.getUserProfile) {

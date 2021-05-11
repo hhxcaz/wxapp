@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "phone": "../../subassembly/phone/phone"
+  },
   "backgroundColor":"#3da8ff",
   "navigationBarBackgroundColor": "#3da8ff",
   "navigationBarTextStyle": "white",

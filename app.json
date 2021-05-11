@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/post/post",
     "pages/me/me",
-    "pages/me/history",
+    "pages/history/history",
     "pages/logs/logs"
   ],
   "permission": {

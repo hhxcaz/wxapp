@@ -21,8 +21,15 @@ App({
             'Authorization': wx.getStorageSync('token')
           },
           success: (res) => {
-            this.userData.userLoginFlag = true;
-            this.updateUserData(res.data.data);
+            if(res.data.code == 200) {
+              this.userData.userLoginFlag = true;
+              this.updateUserData(res.data.data);
+            }
+            else {
+              //接口请求失败，判断该token无效，清除token重新执行login
+              wx.removeStorageSync('token');
+              this.login();
+            }
           },
           complete: () => {
             resolve();

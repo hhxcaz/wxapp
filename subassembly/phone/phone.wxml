@@ -1,0 +1,26 @@
+<!--subassembly/phone.wxml-->
+<view class='containerPromotion'>
+  <!--弹窗-->
+  <view class="modal-mask" bindtap="onCancel" catchtouchmove="preventTouchMove" wx:if="{{phone.showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{phone.showModal}}">
+    <view class="modal-title">更换手机号</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <view class="modal-input-div">
+        <text class="text">手机号</text>
+        <input placeholder-class="input-holder" type="number" bindinput="phoneValueUpdate" maxlength="11" class="input" placeholder="请输入手机号" value="{{phone.phoneNum}}"> </input>
+        </view>
+        <!-- 验证码暂时不需要 -->
+        <!-- <view class="modal-input-div">
+          <text class="text">验证码</text>
+          <input placeholder-class="input-holder" type="number" bindinput="inputValueCode" maxlength="6" class="input" placeholder="请输入验证码"></input>
+          <text class="btn-text" bindtap="onClickBtn">{{phone.theString}}</text>
+        </view> -->
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</view>

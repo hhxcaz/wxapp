@@ -15,11 +15,11 @@
       <text class="userinfo-nickname">{{ nickName ? nickName : userInfo.nickName}}</text>
     </block>
   </view>
-
+  <phone phone="{{phone}}" bind:onCancel="phoneOnCancel" bind:onConfirm="phoneOnConfirm" bind:phoneValueUpdate="phoneValueUpdate"></phone>
   <view class="history">
       <text>联系电话</text>
       <text style="color:#999">{{ tel ? tel : "未设置" }}</text>
-      <image class="logo" src="../../img/change.png" mode="cover"></image>
+      <image class="logo" src="../../img/change.png" mode="cover" bindtap="phoneShowModal"></image>
   </view>
   
   <view class="history" bindtap="record">
