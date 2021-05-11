@@ -37,6 +37,13 @@ Page({
       }
     });
   },
+  showToast(message,time) {
+    wx.showToast({
+      title: message,
+      icon: "none",
+      duration: time
+    });
+  },
   phoneShowModal() {
     this.updatePhone(true,this.data.phone.timerNum,this.data.phone.theString,this.data.phone.phoneNum,this.data.phone.codeNum);
   },
@@ -48,11 +55,7 @@ Page({
   },
   phoneOnConfirm() {
     if(this.data.phone.phoneNum.length != 11) {
-      wx.showToast({
-        title: "手机号码格式不正确，请检查",
-        icon: "none",
-        duration: 1000
-      });
+      this.showToast("手机号码格式不正确，请检查",1000);
     }
     else {
       wx.request({
@@ -64,19 +67,11 @@ Page({
         },
         success: (res) => {
           if(res.data.success) {
-            wx.showToast({
-              title: "手机号码更新成功",
-              icon: "none",
-              duration: 1000
-            });
+            this.showToast("手机号码更新成功",1000);
             this.updatePhone(false,this.data.phone.timerNum,this.data.phone.theString,"","");
           }
           else {
-            wx.showToast({
-              title: res.data.message,
-              icon: "none",
-              duration: 1000
-            });
+            this.showToast(res.data.message,1000);
           }
         },
         complete: () => {
@@ -109,7 +104,14 @@ Page({
         ai: a
       },
       success: (res) => {
-        console.log(res.data);
+        if(res.data.success) {
+          if(a) {
+            this.showToast("AI功能已打开",1000);
+          }
+          else {
+            this.showToast("AI功能已关闭",1000);
+          }
+        }
       },
       complete: () => {
         wx.request({
@@ -126,7 +128,7 @@ Page({
   },
   record: function () {
     wx.navigateTo({
-      url: '../me/history'
+      url: '../history/history'
     })
   },
   ai: function(e){
@@ -142,7 +144,62 @@ Page({
             that.xdata(false);
           }
           else {
-            that.xdata(true);
+            wx.getSetting({
+              withSubscriptions: true,   //  这里设置为true,下面才会返回mainSwitch
+              success: function(res){
+                console.log(res);
+                // 调起授权界面弹窗
+                if (res.subscriptionsSetting.mainSwitch) {  // 用户打开了订阅消息总开关
+                  if (res.subscriptionsSetting.itemSettings != null) {// 用户同意总是保持是否推送消息的选择, 这里表示以后不会再拉起推送消息的授权
+                    let moIdState = res.subscriptionsSetting.itemSettings["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"];  // 用户同意的消息模板id
+                    if(moIdState === 'accept'){   
+                      console.log('接受了消息推送');
+                      that.xdata(true);
+                    }else if(moIdState === 'reject'){
+                      console.log("拒绝消息推送");
+                      that.xdata(false);
+                    }else if(moIdState === 'ban'){
+                      console.log("已被后台封禁");
+                      that.xdata(false);
+                    }
+                  }else {
+                    // 当用户没有点击 ’总是保持以上选择，不再询问‘  按钮。那每次执到这都会拉起授权弹窗
+                    wx.requestSubscribeMessage({   // 调起消息订阅界面
+                      tmplIds: ["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"],
+                      success (res) { 
+                        switch(res.FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo) {
+                          case "accept":
+                            console.log('订阅消息 用户同意');
+                            that.xdata(true);
+                            break;
+                          case "reject":
+                            console.log('订阅消息 用户拒绝');
+                            that.xdata(false);
+                            break;
+                          //剩下的是后台封禁等啥的判断，直接统一处理为false
+                          default:
+                            console.log('订阅消息 失败');
+                            that.xdata(false);
+                            break;
+                        }
+                      },
+                      fail (er){
+                        console.log("订阅消息 失败");
+                        console.log(er);
+                        that.xdata(false);
+                      }
+                    });
+                  }
+                }else {
+                  console.log("订阅消息总开关为关闭状态");
+                  that.xdata(false);
+                }
+              },
+              fail: function(error){
+                console.log(error);
+                that.xdata(false);
+              },
+            });
           }
        },
       });
