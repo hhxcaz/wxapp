@@ -53,24 +53,66 @@ Page({
     })
   },
   delete: function(e){
+    var _this = this
     wx.showModal({
       title: "温馨提示", 
       content: "确定彻底删除此条信息？", 
       cancelText: "否",
       confirmText: "是",
       success: function (res) {
-       
+        wx.request({
+          url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/remove',
+          header: { 'Authorization': wx.getStorageSync('token') },
+          method: 'POST',
+          data: {
+            id: e.target.dataset.id,
+            status: 3
+          },
+          success: (res) => {
+            console.log(res.data)
+          },
+          complete: function (res) {
+            wx.showToast({
+              title: "删除成功",
+              icon: "success",
+              duration: 1000
+            });
+            _this.getdata(1)
+            _this.getdata(2)
+          }
+        })
      },
     })
   },
-  complete: function(e){
+  finish: function(e){
+    var _this = this
     wx.showModal({
       title: "温馨提示", 
       content: "是否将此条信息设为已完成？", 
       cancelText: "否",
       confirmText: "是",
       success: function (res) {
-       
+        wx.request({
+          url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/remove',
+          header: { 'Authorization': wx.getStorageSync('token') },
+          method: 'POST',
+          data: {
+            id: e.target.dataset.id,
+            status: 2
+          },
+          success: (res) => {
+            console.log(res.data)
+          },
+          complete: function (res) {
+            wx.showToast({
+              title: "成功",
+              icon: "success",
+              duration: 1000
+            });
+            _this.getdata(1)
+            _this.getdata(2)
+          }
+        })
      },
     })
   },
