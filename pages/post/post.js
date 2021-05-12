@@ -23,6 +23,7 @@ Page({
       index: Index,
       show: !this.data.show
     });
+    console.log(this.data.index)
   },
   selectorCity: function (e) {
     this.setData({
@@ -66,7 +67,7 @@ Page({
   },
   cals: function (e) {
     this.setData({
-      num: 160 - e.detail.value.length,
+      snum: 160 - e.detail.value.length,
       sinfo: e.detail.value
     })
   },
@@ -105,7 +106,7 @@ Page({
             intro: this.data.xinfo,
             address: this.data.locationName,
             image: images.toString(),
-            categoryId: this.data.index,
+            categoryId: this.data.index + 1,
             reward: this.data.money,
             type: 2
           },
@@ -174,7 +175,7 @@ Page({
         intro: this.data.sinfo,
         address: this.data.locationName,
         image: this.data.photoList.toString(),
-        categoryId: this.data.index,
+        categoryId: this.data.index + 1,
         type: 1
       },
       success: (res) => {
