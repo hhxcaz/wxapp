@@ -55,7 +55,7 @@ Page({
   },
   phoneOnConfirm() {
     if(this.data.phone.phoneNum.length != 11) {
-      this.showToast("手机号码格式不正确，请检查",1000);
+      this.showToast("手机号码格式不正确，请检查",2000);
     }
     else {
       wx.request({
@@ -67,11 +67,11 @@ Page({
         },
         success: (res) => {
           if(res.data.success) {
-            this.showToast("手机号码更新成功",1000);
+            this.showToast("手机号码更新成功",2000);
             this.updatePhone(false,this.data.phone.timerNum,this.data.phone.theString,"","");
           }
           else {
-            this.showToast(res.data.message,1000);
+            this.showToast(res.data.message,2000);
           }
         },
         complete: () => {

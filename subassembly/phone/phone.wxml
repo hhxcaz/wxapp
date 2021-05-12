@@ -7,8 +7,7 @@
     <view class="modal-content">
       <view class="modal-input">
         <view class="modal-input-div">
-        <text class="text">手机号</text>
-        <input placeholder-class="input-holder" type="number" bindinput="phoneValueUpdate" maxlength="11" class="input" placeholder="请输入手机号" value="{{phone.phoneNum}}"> </input>
+        <input placeholder-class="input-holder" type="number" bindinput="phoneValueUpdate" maxlength="11" class="input" placeholder="请输入新手机号" value="{{phone.phoneNum}}"> </input>
         </view>
         <!-- 验证码暂时不需要 -->
         <!-- <view class="modal-input-div">
