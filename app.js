@@ -7,31 +7,101 @@ App({
     wx.setStorageSync('logs', logs)
   },
   /**
+   * 更改用户的AI开关
+   * true则代表修改成功 false则代表修改失败
+   * @param {Boolean} flag AI开关
+   */
+  updateUserData_AI(flag) {
+    return new Promise((resolve) => {
+      let successFlag = false;
+      wx.request({
+        url: 'https://api.xunhuiwang.cn/api/v1/pri/user/tel',
+        header: { 'Authorization': wx.getStorageSync('token') },
+        method: 'POST',
+        data: {
+          ai: flag
+        },
+        success: (res) => {
+          successFlag = res.data.success;
+          if(successFlag) {
+            if(flag) {
+              wx.showToast({
+                title: "AI功能已打开",
+                icon: "none",
+                duration: 1000
+              });
+            }
+            else {
+              wx.showToast({
+                title: "AI功能已关闭",
+                icon: "none",
+                duration: 1000
+              });
+            }
+          }
+        },
+        complete: () => {
+          resolve(successFlag);
+        }
+      });
+    });
+  },
+  /**
+   * 调用更新用户信息接口
+   * 执行结束后返回一个 布尔的Flag值
+   * true则代表数据获取成功 false则代表数据获取失败
+   * 数据获取失败后将清空用户信息且删除token，请重新登录
+   */
+  updateUserInfo() {
+    return new Promise((resolve) => {
+      let flag = false;
+      wx.showLoading({
+        title: '正在更新信息..',
+      });
+      wx.request({
+        url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
+        method: 'GET',
+        header: {
+          'Authorization': wx.getStorageSync('token')
+        },
+        success: (res) => {
+          if(res.data.code == 200) {
+            flag = true;
+            this.userData.userLoginFlag = true;
+            this.updateUserData(res.data.data);
+          }
+        },
+        complete: () => {
+          wx.hideLoading();
+          if(!flag) {
+            this.cleanUserData();
+            //接口请求失败，判断该token无效，清除token重新执行login
+            wx.removeStorageSync('token');
+          }
+          resolve(flag);
+        }
+      });
+    });
+  },
+  /**
    * 用户登入方法，如果用户未登入则会去登入，如果用户已登入则无效果，如果用户不存在则弹窗询问用户是否注册
    */
   login(){
     return new Promise((resolve) => {
+      wx.showLoading({
+        title: '正在登录..',
+      });
       let sessionFlag = false;//Session过期判断标志位
       if(wx.getStorageSync('token'))
       {
-        wx.request({
-          url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
-          method: 'GET',
-          header: {
-            'Authorization': wx.getStorageSync('token')
-          },
-          success: (res) => {
-            if(res.data.code == 200) {
-              this.userData.userLoginFlag = true;
-              this.updateUserData(res.data.data);
-            }
-            else {
-              //接口请求失败，判断该token无效，清除token重新执行login
-              wx.removeStorageSync('token');
-              this.login();
-            }
-          },
-          complete: () => {
+        wx.hideLoading();
+        this.updateUserInfo().then((flag) =>{
+          if(!flag) {
+            this.login().then(() => {
+              resolve();
+            });
+          }
+          else {
             resolve();
           }
         });
@@ -80,6 +150,7 @@ App({
                       complete: () => {
                         if(result != null) {
                           if(result.success) {
+                            wx.hideLoading();
                             wx.setStorageSync('token', result.data.token);
                             this.userData.userLoginFlag = true;
                             this.updateUserData(result.data.user);
@@ -96,6 +167,7 @@ App({
                               confirmText: "同意",
                               success: (res) => {
                                 if(res.confirm) {
+                                  wx.hideLoading();
                                   this.register();
                                 }
                                 else {
@@ -107,16 +179,19 @@ App({
                                 this.cleanUserData();
                               }
                             });
+                            wx.hideLoading();
                             resolve();
                             return;
                           }
                         }
+                        wx.hideLoading();
                         this.showLoginErrorModal("请尝试重新进入");
                         resolve();
                       }
                     });
                   }
                   else {
+                    wx.hideLoading();
                     this.showLoginErrorModal("凭证获取失败，请检查网络");
                     resolve();
                   }
@@ -124,6 +199,7 @@ App({
               });
             }
             else {
+              wx.hideLoading();
               resolve();
             }
           }

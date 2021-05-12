@@ -75,15 +75,7 @@ Page({
           }
         },
         complete: () => {
-          wx.request({
-            url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
-            header: { 'Authorization': wx.getStorageSync('token') },
-            method: 'GET',
-            success: (res) => {
-              getApp().updateUserData(res.data.data);
-              this.UpdateUserData();
-            }
-          });
+          this.updateUserData();
         }
       });
     }
@@ -95,44 +87,13 @@ Page({
       })
     }
   },
-  xdata: function (a) {
-    wx.request({
-      url: 'https://api.xunhuiwang.cn/api/v1/pri/user/tel',
-      header: { 'Authorization': wx.getStorageSync('token') },
-      method: 'POST',
-      data: {
-        ai: a
-      },
-      success: (res) => {
-        if(res.data.success) {
-          if(a) {
-            this.showToast("AI功能已打开",1000);
-          }
-          else {
-            this.showToast("AI功能已关闭",1000);
-          }
-        }
-      },
-      complete: () => {
-        wx.request({
-          url: 'https://api.xunhuiwang.cn/api/v1/pri/user/info',
-          header: { 'Authorization': wx.getStorageSync('token') },
-          method: 'GET',
-          success: (res) => {
-            getApp().updateUserData(res.data.data);
-            this.UpdateUserData();
-          }
-        });
-      }
-    });
-  },
   record: function () {
     wx.navigateTo({
       url: '../history/history'
     })
   },
   ai: function(e){
-    let that = this
+    let that = this;
     if(e.detail.value){
       wx.showModal({
         title: "温馨提示", 
@@ -141,71 +102,16 @@ Page({
         confirmText: "确定",
         success: function (res) {
           if (res.cancel) { //点击取消
-            that.xdata(false);
+            getApp().updateUserData_AI(false);
           }
           else {
-            wx.getSetting({
-              withSubscriptions: true,   //  这里设置为true,下面才会返回mainSwitch
-              success: function(res){
-                console.log(res);
-                // 调起授权界面弹窗
-                if (res.subscriptionsSetting.mainSwitch) {  // 用户打开了订阅消息总开关
-                  if (res.subscriptionsSetting.itemSettings != null) {// 用户同意总是保持是否推送消息的选择, 这里表示以后不会再拉起推送消息的授权
-                    let moIdState = res.subscriptionsSetting.itemSettings["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"];  // 用户同意的消息模板id
-                    if(moIdState === 'accept'){   
-                      console.log('接受了消息推送');
-                      that.xdata(true);
-                    }else if(moIdState === 'reject'){
-                      console.log("拒绝消息推送");
-                      that.xdata(false);
-                    }else if(moIdState === 'ban'){
-                      console.log("已被后台封禁");
-                      that.xdata(false);
-                    }
-                  }else {
-                    // 当用户没有点击 ’总是保持以上选择，不再询问‘  按钮。那每次执到这都会拉起授权弹窗
-                    wx.requestSubscribeMessage({   // 调起消息订阅界面
-                      tmplIds: ["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"],
-                      success (res) { 
-                        switch(res.FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo) {
-                          case "accept":
-                            console.log('订阅消息 用户同意');
-                            that.xdata(true);
-                            break;
-                          case "reject":
-                            console.log('订阅消息 用户拒绝');
-                            that.xdata(false);
-                            break;
-                          //剩下的是后台封禁等啥的判断，直接统一处理为false
-                          default:
-                            console.log('订阅消息 失败');
-                            that.xdata(false);
-                            break;
-                        }
-                      },
-                      fail (er){
-                        console.log("订阅消息 失败");
-                        console.log(er);
-                        that.xdata(false);
-                      }
-                    });
-                  }
-                }else {
-                  console.log("订阅消息总开关为关闭状态");
-                  that.xdata(false);
-                }
-              },
-              fail: function(error){
-                console.log(error);
-                that.xdata(false);
-              },
-            });
+            getApp().updateUserData_AI(true);
           }
        },
       });
     }
     else {
-      that.xdata(false);
+      getApp().updateUserData_AI(false);
     }
   },
   getUserProfile(e) {
@@ -233,19 +139,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    getApp().login().then(() => { this.UpdateUserData(); });//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
+    getApp().login().then(() => { this.updateUserData(); });//每次显示页面都去执行一下登入方法，如果未登入则会登入，如果已登入则无效果，如果登入失败则弹出登入失败提示
   },
   /**
    * 重新加载 UserData 的数据信息
    * (由于login的异步原因可能导致UserData在login结束后要重新加载)
    * (如果更新了UserData的数据则也要调用该方法重新加载UserData)
    */
-  UpdateUserData() {
-    this.setData({
-      avatarUrl: getApp().userData.avatarUrl,
-      nickName: getApp().userData.nickName,
-      tel: getApp().userData.phone,
-      switch1Checked: getApp().userData.ai,
+  updateUserData() {
+    getApp().updateUserInfo().then((flag) => {
+      if(flag) {
+        this.setData({
+          avatarUrl: getApp().userData.avatarUrl,
+          nickName: getApp().userData.nickName,
+          tel: getApp().userData.phone,
+          switch1Checked: getApp().userData.ai,
+        });
+      }
+      else {
+        getApp().login().then(() => {
+          this.updateUserData();
+        });
+      }
     });
   },
   /**
