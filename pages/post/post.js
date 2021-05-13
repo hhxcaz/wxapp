@@ -23,7 +23,6 @@ Page({
       index: Index,
       show: !this.data.show
     });
-    console.log(this.data.index)
   },
   selectorCity: function (e) {
     this.setData({
