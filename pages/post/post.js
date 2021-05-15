@@ -83,7 +83,7 @@ Page({
     let _this = this;
     if (this.data.xinfo == '') {
       wx.showToast({
-        title: "尚未填写发布内容",
+        title: "未填写发布内容",
         icon: "none",
         duration: 1000
       });
@@ -96,7 +96,8 @@ Page({
             images.push(this.data.photoList[a].url);
           }
         }
-        let Flag = false;
+        let flag = false;
+        let data;
         wx.request({
           url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
           method: 'POST',
@@ -113,31 +114,43 @@ Page({
           },
           success: (res) => {
             console.log(res.data);
-            Flag = res.data.success;
+            flag = res.data.success;
+            data = res.data.data;
           },
           complete: function () {
             wx.hideLoading();
-            if(Flag) {
+            if(flag) {
               new Promise((resolve) => {
-                if(getApp().userData.ai) {
+                if(getApp().userData.ai && data != null && data.list != null && data.list.length > 0) {
                   wx.showModal({
                     title: "您已打开了AI寻物", 
                     content: "请同意我们给您推送通知，否则将会关闭AI寻物功能", 
                     showCancel: false,
                     confirmText: "我知道了",
                     success: function (res) {
-                      console.log(res);
                       wx.getSetting({
                         withSubscriptions: true,   //  这里设置为true,下面才会返回mainSwitch
                         success: function(res){
-                          console.log(res);
                           // 调起授权界面弹窗
                           if (res.subscriptionsSetting.mainSwitch) {  // 用户打开了订阅消息总开关
                             if (res.subscriptionsSetting.itemSettings != null) {// 用户同意总是保持是否推送消息的选择, 这里表示以后不会再拉起推送消息的授权
-                              let moIdState = res.subscriptionsSetting.itemSettings["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"];  // 用户同意的消息模板id
+                              let moIdState = res.subscriptionsSetting.itemSettings["FIYygnDaIsG0b3k4C8bpphLaUN-tPV_UIIxaYjbHAjI"];  // 用户同意的消息模板id
                               if(moIdState === 'accept'){   
                                 console.log('接受了消息推送');
-                                getApp().updateUserData_AI(false);
+                                wx.request({
+                                  url: 'https://api.xunhuiwang.cn/api/v1/pub/message/send',
+                                  header: { 'Authorization': wx.getStorageSync('token') },
+                                  method: 'POST',
+                                  data: {
+                                    address: data.list[0].address,
+                                    contactWay: data.list[0].user.phone,
+                                    nickname: data.list[0].user.nickname,
+                                    touser: getApp().userData.userName
+                                  },
+                                  success: (res) => {
+                                    console.log(res);
+                                  }
+                                });
                               }else if(moIdState === 'reject'){
                                 console.log("拒绝消息推送");
                                 getApp().updateUserData_AI(false);
@@ -149,9 +162,10 @@ Page({
                             }else {
                               // 当用户没有点击 ’总是保持以上选择，不再询问‘  按钮。那每次执到这都会拉起授权弹窗
                               wx.requestSubscribeMessage({   // 调起消息订阅界面
-                                tmplIds: ["FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo"],
+                                tmplIds: ["FIYygnDaIsG0b3k4C8bpphLaUN-tPV_UIIxaYjbHAjI"],
                                 success (res) { 
-                                  switch(res.FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo) {
+                                  let { "FIYygnDaIsG0b3k4C8bpphLaUN-tPV_UIIxaYjbHAjI": tmplId } = res;
+                                  switch(tmplId) {
                                     case "accept":
                                       console.log('订阅消息 用户同意');
                                       wx.request({
@@ -159,12 +173,9 @@ Page({
                                         header: { 'Authorization': wx.getStorageSync('token') },
                                         method: 'POST',
                                         data: {
-                                          address: _this.data.locationName,
-                                          contactWay: getApp().userData.phone,
-                                          nickname: getApp().userData.nickName,
-                                          remark: "您的失物已被找回",
-                                          template_id: "FIYygnDaIsG0b3k4C8bpptGgs2xPrW3vWOSOrzshuXo",
-                                          time: "2020-02-02 00:00:00",
+                                          address: data.list[0].address,
+                                          contactWay: data.list[0].user.phone,
+                                          nickname: data.list[0].user.nickname,
                                           touser: getApp().userData.userName
                                         },
                                         success: (res) => {
@@ -269,7 +280,7 @@ Page({
   spost: function () {
     if (this.data.sinfo == '') {
       wx.showToast({
-        title: "尚未填写发布内容",
+        title: "未填写发布内容",
         icon: "none",
         duration: 1000
       });
@@ -282,7 +293,7 @@ Page({
             images.push(this.data.photoList[a].url);
           }
         }
-        let Flag = false;
+        let flag = false;
         wx.request({
           url: 'https://api.xunhuiwang.cn/api/v1/pri/lost/publish',
           method: 'POST',
@@ -298,11 +309,11 @@ Page({
           },
           success: (res) => {
             console.log(res.data);
-            Flag = res.data.success;
+            flag = res.data.success;
           },
           complete: function () {
             wx.hideLoading();
-            if(Flag) {
+            if(flag) {
               wx.showToast({
                 title: "发布成功！",
                 icon: "success",
