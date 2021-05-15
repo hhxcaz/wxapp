@@ -212,7 +212,7 @@ Page({
                 }
               }).then(() => {
                 wx.showToast({
-                  title: "恭喜，发布成功！",
+                  title: "发布成功！",
                   icon: "success",
                   duration: 1000
                 });
@@ -304,7 +304,7 @@ Page({
             wx.hideLoading();
             if(Flag) {
               wx.showToast({
-                title: "恭喜，发布成功！",
+                title: "发布成功！",
                 icon: "success",
                 duration: 1000
               });
