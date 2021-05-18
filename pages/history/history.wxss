@@ -137,9 +137,14 @@ page{
   padding-top: 16rpx;
 }
 .imgs{
-  margin-top: 16rpx;
+  margin: 16rpx 0 0 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+.imgs image{
+  width:110px;
+  height:110px;
+  margin: 0 20rpx 0 0;
 }
 
 .tip{

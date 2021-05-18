@@ -76,7 +76,7 @@ Page({
     console.log(len)
     query.select('.card').boundingClientRect(function (rect) {
       that.setData({
-        widHeight: 220 * len
+        widHeight: 260 * len
       })
     }).exec();
   },
