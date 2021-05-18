@@ -30,14 +30,14 @@ Component({
     },
     uploadImg(){
       let my = this;
+      let num = 3 - this.data.photoList.length ;
       wx.chooseImage({
-        count: 3,//能选择的最大图片
+        count: num,//能选择的最大图片
         sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: function(res){
           if(my.data.photoList.length < 3)
           {
-            let num = 3 - my.data.photoList.length ;
             if(res.tempFilePaths.length < num) {
               num = res.tempFilePaths.length;
             }

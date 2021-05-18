@@ -54,6 +54,9 @@ Page({
     this.updatePhone(this.data.phone.showModal,this.data.phone.timerNum,this.data.phone.theString,e.detail.phoneNum,this.data.phone.codeNum);
   },
   phoneOnConfirm() {
+    let message = "未知错误";
+    let icon = "none";
+    let _this = this;
     if(this.data.phone.phoneNum.length != 11) {
       this.showToast("手机号码格式不正确，请检查",2000);
     }
@@ -67,15 +70,23 @@ Page({
         },
         success: (res) => {
           if(res.data.success) {
-            this.showToast("手机号码更新成功",2000);
+            message = "手机号码更新成功";
             this.updatePhone(false,this.data.phone.timerNum,this.data.phone.theString,"","");
           }
           else {
-            this.showToast(res.data.message,2000);
+            message = res.data.message;
+            icon = "error";
           }
         },
         complete: () => {
-          this.updateUserData();
+          wx.showToast({
+            title: message,
+            icon: icon,
+            duration: 2000
+          });
+          setTimeout(function () {
+            _this.updateUserData();
+        }, 2000);
         }
       });
     }
