@@ -30,6 +30,11 @@ Page({
       selectorVisible: true,
     });
   },
+  tel: function(e){
+    wx.makePhoneCall({
+      phoneNumber: e.target.dataset.tel,
+    })
+  },
   more: function (e) {
     if(e.target.dataset.id == 'x'){
         this.setData({
@@ -62,6 +67,14 @@ Page({
     });
     wx.setStorageSync('location', e.detail.city.fullname)
     this.getdata(2,6)
+  },
+  look: function(e){
+    var imgUrl = e.target.dataset.res;
+    wx.previewImage({
+      urls: [imgUrl], //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      complete: function (res) { },
+    })
   },
   // 事件处理函数
   bindViewTap() {

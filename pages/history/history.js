@@ -1,11 +1,18 @@
-// pages/me/history.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     currentTab: 0,
+    widHeight:1000
+  },
+  getheight(){
+    var query = wx.createSelectorQuery();
+    var that = this;
+    var len = (wx.getStorageSync('xlist')).length;
+    console.log(len)
+    query.select('.card').boundingClientRect(function (rect) {
+      that.setData({
+        widHeight: 260 * len
+      })
+    }).exec();
   },
   getdata(i) {
     wx.request({
@@ -122,6 +129,7 @@ Page({
   onLoad: function (options) {
     this.getdata(1)
     this.getdata(2)
+    this.getheight()
   },
 
   /**

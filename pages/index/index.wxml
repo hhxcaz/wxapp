@@ -50,7 +50,7 @@
           <view class="time">{{item.formatTime}}</view>
         </view>
         <view class="card-right">
-          <view class="call">联系TA</view>
+          <view class="call" data-tel="{{item.user.phone}}" bindtap="tel">联系TA</view>
           <view class="money" wx:if="{{item.reward !== 0}}">酬谢：¥{{item.reward}}</view>
         </view>
       </view>
@@ -58,7 +58,7 @@
         {{item.intro}}
       </viwe>
       <view class="imgs" wx:if="{{item.image[0] !== ''}}">
-        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}" data-res="{{item}}" bindtap="look"></image>
       </view>
       </view>
   </block>
@@ -81,14 +81,14 @@
           <view class="time">{{item.formatTime}}</view>
         </view>
         <view class="card-right">
-          <view class="call">联系TA</view>
+          <view class="call" data-tel="{{item.user.phone}}" bindtap="tel">联系TA</view>
         </view>
       </view>
       <viwe class="info">
         {{item.intro}}
       </viwe>
       <view class="imgs" wx:if="{{item.image[0] !== ''}}">
-        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}"></image>
+        <image wx:for="{{item.image}}" wx:key="index" src="{{item}}" data-res="{{item}}" bindtap="look"></image>
       </view>
       </view>
   </block>

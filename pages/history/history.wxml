@@ -5,7 +5,7 @@
 </view>
 
 <!--内容主体-->
-<swiper style='height:1000px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
+<swiper style='height:{{widHeight}}px' class="swiper" current="{{currentTab}}" duration="200" bindchange="swiperChange">
   <!-- 寻物启事 -->
   <swiper-item>
     <text class="tip">展示中</text>
