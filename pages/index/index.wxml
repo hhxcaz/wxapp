@@ -64,6 +64,7 @@
   </block>
   <view class="tips" wx:if="{{xlist.length == 0}}">空空如也，暂无更多数据哦</view>
   <button wx:if="{{limit < xnum}}" style="font-size:15px" bindtap="more" data-id="x">加载更多</button>
+  <button wx:if="{{xfind}}" style="font-size:15px;color:red" bindtap="back">退出搜索</button>
   </swiper-item>
 
   <!-- 失物招领 -->
@@ -94,6 +95,7 @@
   </block>
   <view class="tips" wx:if="{{slist.length == 0}}">空空如也，暂无更多数据哦</view>
   <button wx:if="{{limit < snum}}" style="font-size:15px" bindtap="more" data-id="s">加载更多</button>
+  <button wx:if="{{sfind}}" style="font-size:15px"  bindtap="back">退出搜索</button>
   </swiper-item>
 </swiper>
 

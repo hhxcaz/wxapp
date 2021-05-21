@@ -5,6 +5,8 @@ Page({
   data: {
     currentTab: 0,
     choose: 0,
+    sfind: false,
+    xfind: false,
     selectorVisible: false,
     widHeight: 1200,
     limit: 10,
@@ -67,6 +69,63 @@ Page({
     });
     wx.setStorageSync('location', e.detail.city.fullname)
     this.getdata(2,6)
+  },
+  searching: function(e){
+    let i = 1
+    if(this.data.currentTab){
+        i = 1
+        this.setData({
+          sfind: !this.data.sfind
+        });
+      }else{
+        i = 2
+        this.setData({
+          xfind: !this.data.xfind
+        });
+        console.log(this.data.currentTab)
+      }
+    wx.request({
+      url: 'https://api.xunhuiwang.cn/api/v1/pub/lost/list',
+      header: { 'Authorization': wx.getStorageSync('token') },
+      data: {
+        address: this.data.locationName,
+        type: i,
+        cate: 0,
+        limit: this.data.limit,
+        desc: e.detail.value,
+        page: 1
+      },
+      success: (res) => {
+        if (++this.data.currentTab==2) {
+          this.setData({
+            slist: res.data.data.items,
+            snum: res.data.data.total
+          })
+          wx.setStorageSync('slist', res.data.data.items)
+        } else {
+          this.setData({
+            xlist: res.data.data.items,
+            xnum: res.data.data.total
+          })
+          wx.setStorageSync('xlist', res.data.data.items)
+        }
+        console.log(res.data)
+      },
+    })
+  },
+  back: function(e){
+    console.log(this.data.currentTab)
+    if(this.data.currentTab == 1){
+      this.getdata(2,0)
+      this.setData({
+        xfind: !this.data.xfind
+      });
+    }else{
+      this.getdata(1,0)
+      this.setData({
+        sfind: !this.data.sfind
+      });
+    }
   },
   look: function(e){
     var imgUrl = e.target.dataset.res;
