@@ -42,13 +42,13 @@ Page({
         this.setData({
           limit: this.data.limit+10
         });
-        this.getdata(2,0)
+        this.getdata(2,this.data.choose)
         this.getheight
     }else{
       this.setData({
         limit: this.data.limit+10
       });
-      this.getdata(1,0)
+      this.getdata(1,this.data.choose)
       this.getheight
     }
   },
@@ -68,7 +68,7 @@ Page({
       locationName: e.detail.city.fullname
     });
     wx.setStorageSync('location', e.detail.city.fullname)
-    this.getdata(2,6)
+    this.getdata(2,this.data.choose)
   },
   searching: function(e){
     let i = 1
@@ -83,6 +83,7 @@ Page({
           xfind: !this.data.xfind
         });
         console.log(this.data.currentTab)
+        
       }
     wx.request({
       url: 'https://api.xunhuiwang.cn/api/v1/pub/lost/list',
@@ -116,12 +117,12 @@ Page({
   back: function(e){
     console.log(this.data.currentTab)
     if(this.data.currentTab == 1){
-      this.getdata(2,0)
+      this.getdata(2,this.data.choose)
       this.setData({
         xfind: !this.data.xfind
       });
     }else{
-      this.getdata(1,0)
+      this.getdata(1,this.data.choose)
       this.setData({
         sfind: !this.data.sfind
       });
@@ -198,7 +199,7 @@ Page({
     }else{
       var i=1
     }
-    this.getdata(i,0)
+    this.getdata(i,this.data.choose)
   },
 
   /**
@@ -206,8 +207,8 @@ Page({
    */
   onReachBottom: function () { },
   onLoad: function (optins) {
-    this.getdata(1,0)
-    this.getdata(2,0)
+    this.getdata(1,this.data.choose)
+    this.getdata(2,this.data.choose)
   },
   onReady: function () {
     var that = this
