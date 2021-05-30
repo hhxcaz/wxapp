@@ -207,8 +207,8 @@ Page({
    */
   onReachBottom: function () { },
   onLoad: function (optins) {
-    this.getdata(1,this.data.choose)
-    this.getdata(2,this.data.choose)
+    this.getdata(1,0)
+    this.getdata(2,0)
   },
   onReady: function () {
     var that = this
